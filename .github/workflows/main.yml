@@ -25,8 +25,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: swgoh-build
-          path: build
-          working-directory: UIProject
+          path: UIProject/build
   deploy:
     runs-on: ubuntu-latest
     # When application is successfully tested and build has been generated
