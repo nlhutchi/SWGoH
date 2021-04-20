@@ -26,6 +26,7 @@ jobs:
         with:
           name: swgoh-build
           path: build
+          working-directory: UIProject
   deploy:
     runs-on: ubuntu-latest
     # When application is successfully tested and build has been generated
