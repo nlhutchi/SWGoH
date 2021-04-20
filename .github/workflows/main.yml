@@ -8,8 +8,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Change directory
-        run: cd UIProject
       - name: Clone repository
         uses: actions/checkout@v2
       - name: Use Node.js 12.x
@@ -17,8 +15,10 @@ jobs:
         with:
           node-version: 12.x
       - name: Install dependencies
+        working-directory: UIProject
         run: npm install
       - name: Generate build
+        working-directory: UIProject
         run: npm run build
       # Share artifact inside workflow
       - name: Share artifact inside workflow
