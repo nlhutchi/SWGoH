@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - uses: falnyr/aws-sam-deploy-action@v1.3.0
       env:
-        TEMPLATE: 'template.json'
+        TEMPLATE: 'APIProject/template.json'
         AWS_STACK_NAME: SWGoH-API
         AWS_REGION: 'us-west-2'
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
