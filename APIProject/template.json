@@ -15,6 +15,35 @@
                 "StageName": "SWGoH",
                 "EndpointConfiguration": "REGIONAL"
             }
+        },
+        "UserDetailsLF": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "FunctionName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            { "Ref": "AppName" },
+                            "UserDetails-LF"
+                        ]
+                    ]
+                },
+                "CodeURI": "./LambdaFunctions/UserDetails-LF",
+                "Handler": "index.handler",
+                "Runtime": "nodejs12.x",
+                "Events": {
+                    "Ping": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/Ping/",
+                            "Method": "get",
+                            "RestApiId": {
+                                "Ref": "ApiGateway"
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
