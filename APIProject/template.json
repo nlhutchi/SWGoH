@@ -28,7 +28,7 @@
                         ]
                     ]
                 },
-                "CodeURI": "./DeploymentAssets/UserDetails-LF.zip",
+                "CodeUri": "./DeploymentAssets/UserDetails-LF.zip",
                 "Handler": "index.handler",
                 "Runtime": "nodejs12.x",
                 "AutoPublishAlias": "live",
