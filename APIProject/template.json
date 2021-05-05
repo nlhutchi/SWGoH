@@ -1,11 +1,19 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Transform": "AWS::Serverless-2016-10-31",
+    "Parameters": {
+        "AppName": {
+            "Type": "String",
+            "Default": "SWGoH-Api"
+        }
+    },
     "Resources": {
         "ApiGateway": {
             "Type": "AWS::Serverless::Api",
             "Properties": {
-                
+            "Name": { "Ref": "AppName" },
+            "StageName": "SWGoH",
+            "EndpointConfiguration": "REGIONAL"
             }
         }
     }
