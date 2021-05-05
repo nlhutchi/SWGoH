@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'APIProject/**'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: falnyr/aws-sam-deploy-action@v1.3.0
+      env:
+        TEMPLATE: 'template.json'
+        AWS_STACK_NAME: SWGoH-API
+        AWS_REGION: 'us-west-2'
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_BUCKET_PREFIX: 'SWGoH-API'
+        AWS_DEPLOY_BUCKET: 'honersports.com'
