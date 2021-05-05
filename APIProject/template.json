@@ -11,9 +11,9 @@
         "ApiGateway": {
             "Type": "AWS::Serverless::Api",
             "Properties": {
-            "Name": { "Ref": "AppName" },
-            "StageName": "SWGoH",
-            "EndpointConfiguration": "REGIONAL"
+                "Name": { "Ref": "AppName" },
+                "StageName": "SWGoH",
+                "EndpointConfiguration": "REGIONAL"
             }
         }
     }
