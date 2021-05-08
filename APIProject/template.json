@@ -37,7 +37,7 @@
                         "Type": "Api",
                         "Properties": {
                             "Path": "/SignIn/",
-                            "Method": "get",
+                            "Method": "post",
                             "RestApiId": {
                                 "Ref": "ApiGateway"
                             }
