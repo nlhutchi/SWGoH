@@ -12,7 +12,7 @@ var returnObj = {
 
 exports.handler = async (event, context, callback) => {
     console.log('Event', event);
-    var axiosInstance = createAxiosInstance(event.heders.Authorization);
+    var axiosInstance = createAxiosInstance(event.headers.Authorization);
     var body = event.body;
 
     try {
