@@ -39,8 +39,9 @@ exports.handler = async (event, context, callback) => {
 
     } catch (err) {
         console.log("ERROR: ", err);
-        errorObj.body = JSON.stringify(err);
-        return callback(null, errorObj);
+        returnObj.statusCode = 500;
+        returnObj.body = JSON.stringify(err);
+        return callback(null, returnObj);
     }
 };
 
@@ -50,16 +51,16 @@ async function signInUser() {
         password: 'Bandit', 
         grant_type: 'password',
         client_id: 'abc',
-        client_secret: 123
+        client_secret: '123'
     })
         .then((data) => {
-            console.log("Success", data)
-            returnObj.body = { authToken: data }
-            returnObj.statusCode = 200
+            console.log("Success", data);
+            returnObj.body = { authToken: data };
+            returnObj.statusCode = 200;
         })
         .catch((err) => {
-            console.log("Error", err)
-            returnObj.body = { message: 'denied', details: err }
-            returnObj.statusCode = 400
-        })
+            console.log("Error", err);
+            returnObj.body = { message: 'denied', details: err };
+            returnObj.statusCode = 400;
+        });
 }
