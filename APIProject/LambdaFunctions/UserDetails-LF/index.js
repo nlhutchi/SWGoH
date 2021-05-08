@@ -10,7 +10,7 @@ var returnObj = {
 
 const axiosInstance = axios.create({
       headers: {
-        "content-type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded"
       },
     });
 
@@ -46,13 +46,14 @@ exports.handler = async (event, context, callback) => {
 };
 
 async function signInUser() {
-    await axiosInstance.post('https://api.swgoh.help/auth/signin', { 
+    var params = { 
         username: 'thehutch69', 
         password: 'Bandit', 
         grant_type: 'password',
         client_id: 'abc',
         client_secret: '123'
-    })
+    };
+    await axiosInstance.post('https://api.swgoh.help/auth/signin', params.map((key, val) => `${key}=${encodeURIComponent(val)}`).join('&'))
         .then((data) => {
             console.log("Success", data);
             returnObj.body = { authToken: data };
