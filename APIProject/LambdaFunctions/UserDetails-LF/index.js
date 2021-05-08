@@ -22,7 +22,7 @@ exports.handler = async (event, context, callback) => {
         switch (event.httpMethod) {
             case "POST":
                 switch (event.path) {
-                  case endpointMapping.POST.SignUp.path:
+                  case endpointMapping.POST.SignIn.path:
                     console.log("Endpoint:", endpointMapping.POST.SignIn.description);
                     await signInUser();
                     return callback(null, returnObj);
