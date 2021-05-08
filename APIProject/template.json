@@ -36,7 +36,7 @@
                     "Ping": {
                         "Type": "Api",
                         "Properties": {
-                            "Path": "/Ping/",
+                            "Path": "/SignIn/",
                             "Method": "get",
                             "RestApiId": {
                                 "Ref": "ApiGateway"
