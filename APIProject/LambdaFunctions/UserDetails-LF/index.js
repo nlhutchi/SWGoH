@@ -53,10 +53,12 @@ async function signInUser() {
         client_secret: 123
     })
         .then((data) => {
+            console.log("Success", data)
             returnObj.body = { authToken: data }
             returnObj.statusCode = 200
         })
         .catch((err) => {
+            console.log("Error", err)
             returnObj.body = { message: 'denied', details: err }
             returnObj.statusCode = 400
         })
