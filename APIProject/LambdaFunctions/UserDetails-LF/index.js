@@ -53,7 +53,7 @@ async function signInUser() {
         client_id: 'abc',
         client_secret: '123'
     };
-    await axiosInstance.post('https://api.swgoh.help/auth/signin', params.map((key, val) => `${key}=${encodeURIComponent(val)}`).join('&'))
+    await axiosInstance.post('https://api.swgoh.help/auth/signin', Object.keys(params).map((key) => `${key}=${encodeURIComponent(params[key])}`).join('&'))
         .then((data) => {
             console.log("Success", data);
             returnObj.body = { authToken: data };
