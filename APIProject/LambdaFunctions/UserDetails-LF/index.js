@@ -56,8 +56,8 @@ async function signInUser() {
             returnObj.body = { authToken: data }
             returnObj.statusCode = 200
         })
-        .error((err) => {
-            returnObj.body = { message: 'denied' }
+        .catch((err) => {
+            returnObj.body = { message: 'denied', details: err }
             returnObj.statusCode = 400
         })
 }
