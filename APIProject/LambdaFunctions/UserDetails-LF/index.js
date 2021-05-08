@@ -53,15 +53,17 @@ async function signInUser() {
         client_id: 'abc',
         client_secret: '123'
     };
+    var data = Object.keys(params).map((key) => `${key}=${encodeURIComponent(params[key])}`).join('&');
+    console.log('data', data)
     await axiosInstance.post('https://api.swgoh.help/auth/signin', Object.keys(params).map((key) => `${key}=${encodeURIComponent(params[key])}`).join('&'))
         .then((data) => {
             console.log("Success", data);
-            returnObj.body = { authToken: data };
+            returnObj.body = JSON.stringify({ ...data.data });
             returnObj.statusCode = 200;
         })
         .catch((err) => {
             console.log("Error", err);
-            returnObj.body = { message: 'denied', details: err };
+            returnObj.body = JSON.stringify({ message: 'denied', details: err });
             returnObj.statusCode = 400;
         });
 }
