@@ -1,0 +1,11 @@
+{
+    "GET": {
+
+    },
+    "POST": {
+        "SignIn": {
+            "path": "/SignIn/",
+            "description": "Authenticate with swgoh.help"
+        }
+    }
+}
