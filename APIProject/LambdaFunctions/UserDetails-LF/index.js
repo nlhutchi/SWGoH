@@ -8,18 +8,26 @@ var returnObj = {
     body: null,
 };
 
-const axiosInstance = axios.create({
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-    });
+
 
 exports.handler = async (event, context, callback) => {
-    console.log('Event', event)
+    console.log('Event', event);
+    var axiosInstance = createAxiosInstance(event.heders.Authorization);
     var body = event.body;
 
     try {
         switch (event.httpMethod) {
+            case "PUT": 
+                switch (event.path) {
+                    case endpointMapping.PUT.Players.path:
+                        console.log("Endpoint:", endpointMapping.PUT.Players.description);
+                        await getPlayers(body, axiosInstance);
+                        return callback(null, returnObj);
+                    default:
+                        returnObj.body = "Path not found";
+                        returnObj.statusCode = 404;
+                        return callback(null, returnObj);
+                }
             case "POST":
                 switch (event.path) {
                   case endpointMapping.POST.SignIn.path:
@@ -67,3 +75,35 @@ async function signInUser() {
             returnObj.statusCode = 400;
         });
 }
+
+async function signInUser(body, axiosInstance) {
+    await axiosInstance.post('https://api.swgoh.help/swgoh/players', { allyCodes: body.allyCodes })
+        .then((data) => {
+            console.log("Success", data);
+            returnObj.body = JSON.stringify({ ...data.data });
+            returnObj.statusCode = 200;
+        })
+        .catch((err) => {
+            console.log("Error", err);
+            returnObj.body = JSON.stringify({ message: 'failed', details: err });
+            returnObj.statusCode = 400;
+        })
+}
+
+function createAxiosInstance(auth) {
+    if(auth === undefined){
+        return axios.create({
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+        });
+    } else {
+        return axios.create({
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: auth,
+          },
+        });
+    }
+  }

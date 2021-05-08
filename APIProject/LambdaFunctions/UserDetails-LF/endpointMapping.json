@@ -1,6 +1,9 @@
 {
-    "GET": {
-
+    "PUT": {
+        "Players": {
+            "path": "/Players/",
+            "description": "Get player data from provided allyCodes"
+        }
     },
     "POST": {
         "SignIn": {

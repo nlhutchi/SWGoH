@@ -33,11 +33,21 @@
                 "Runtime": "nodejs12.x",
                 "AutoPublishAlias": "live",
                 "Events": {
-                    "Ping": {
+                    "SignIn": {
                         "Type": "Api",
                         "Properties": {
                             "Path": "/SignIn/",
                             "Method": "post",
+                            "RestApiId": {
+                                "Ref": "ApiGateway"
+                            }
+                        }
+                    },
+                    "PlayerData": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/Players/",
+                            "Method": "get",
                             "RestApiId": {
                                 "Ref": "ApiGateway"
                             }
