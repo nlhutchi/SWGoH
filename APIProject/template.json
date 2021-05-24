@@ -28,7 +28,7 @@
                         ]
                     ]
                 },
-                "CodeUri": "./DeploymentAssets/UserDetails-LF.zip",
+                "CodeUri": "./LambdaFunctions/UserDetails-LF",
                 "Handler": "index.handler",
                 "Runtime": "nodejs12.x",
                 "AutoPublishAlias": "live",
