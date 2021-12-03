@@ -13,8 +13,8 @@ jobs:
         with:
           node-version: 12.x
       - name: Install dependencies
-        working-directory: UIProject
-        run: npm install
+        working-directory: APIProject
+        run: call initializeLambdas.bat
   deploy:
     runs-on: ubuntu-latest
     steps:
