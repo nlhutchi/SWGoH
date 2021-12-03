@@ -1,3 +1,3 @@
-call cd LambdaFunctions/
+call cd LambdaFunctions/UserDetails-LF
 call npm i
 call cd ../..
