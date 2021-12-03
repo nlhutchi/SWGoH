@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         working-directory: APIProject
         shell: bash
-        run: initializeLambdas.bat
+        run: .\initializeLambdas.bat
   deploy:
     runs-on: ubuntu-latest
     steps:
