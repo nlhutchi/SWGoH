@@ -13,8 +13,9 @@ jobs:
         with:
           node-version: 12.x
       - name: Install dependencies
+        working-directory: APIProject
         shell: bash
-        run: ./APIProject/initializeLambdas.bat
+        run: call APIProject/initializeLambdas.bat
   deploy:
     runs-on: ubuntu-latest
     steps:
