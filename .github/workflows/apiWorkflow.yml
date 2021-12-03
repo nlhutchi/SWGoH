@@ -13,9 +13,8 @@ jobs:
         with:
           node-version: 12.x
       - name: Install dependencies
-        working-directory: APIProject
-        shell: bash
-        run: .\initializeLambdas.bat
+        working-directory: APIProject/LambdaFunctions/UserDetails-LF
+        run: npm i
   deploy:
     runs-on: ubuntu-latest
     steps:
