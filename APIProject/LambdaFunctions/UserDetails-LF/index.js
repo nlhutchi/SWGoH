@@ -1,6 +1,7 @@
 const AWS = require("aws-sdk");
 const axios = require('axios');
 const endpointMapping = require("./endpointMapping.json");
+var axiosInstance;
 
 var returnObj = {
     statusCode: null,
@@ -12,7 +13,9 @@ var returnObj = {
 
 exports.handler = async (event, context, callback) => {
     console.log('Event', event);
-    var axiosInstance = createAxiosInstance(event.headers.Authorization);
+    if(!axiosInstance) {
+        axiosInstance = createAxiosInstance(event.headers.Authorization);
+    }
     var body = event.body;
 
     try {
