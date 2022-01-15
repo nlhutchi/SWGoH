@@ -79,6 +79,7 @@ async function signInUser() {
         });
 }
 
+/*
 async function signInUser() {
     await axiosInstance.post('https://api.swgoh.help/auth/signin', { allyCodes: body.allyCodes })
         .then((data) => {
@@ -92,6 +93,7 @@ async function signInUser() {
             returnObj.statusCode = 400;
         })
 }
+*/
 
 function createAxiosInstance(auth) {
     if(auth === undefined){
