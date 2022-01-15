@@ -17,7 +17,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'us-west-2'
       # sam build 
-      - working-directory: UIProject
+      - working-directory: APIProject
         run: sam build --use-container
-      - working-directory: UIProject
+      - working-directory: APIProject
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name SWGoH-API --s3-bucket honersports.com --s3-prefix SWGoH-API --capabilities CAPABILITY_IAM --region us-west-2
