@@ -79,8 +79,8 @@ async function signInUser() {
         });
 }
 
-async function signInUser(body, axiosInstance) {
-    await axiosInstance.post('https://api.swgoh.help/swgoh/players', { allyCodes: body.allyCodes })
+async function signInUser() {
+    await axiosInstance.post('https://api.swgoh.help/auth/signin', { allyCodes: body.allyCodes })
         .then((data) => {
             console.log("Success", data);
             returnObj.body = JSON.stringify({ ...data.data });
