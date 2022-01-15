@@ -33,21 +33,41 @@
                 "Runtime": "nodejs14.x",
                 "AutoPublishAlias": "live",
                 "Events": {
-                    "SignIn": {
-                        "Type": "Api",
-                        "Properties": {
-                            "Path": "/SignIn/",
-                            "Method": "post",
-                            "RestApiId": {
-                                "Ref": "ApiGateway"
-                            }
-                        }
-                    },
                     "PlayerData": {
                         "Type": "Api",
                         "Properties": {
                             "Path": "/Players/",
                             "Method": "get",
+                            "RestApiId": {
+                                "Ref": "ApiGateway"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "SignInUser": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "FunctionName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            { "Ref": "AppName" },
+                            "SignInUser"
+                        ]
+                    ]
+                },
+                "CodeUri": "./LambdaFunctions/SignInUser",
+                "Handler": "index.handler",
+                "Runtime": "nodejs14.x",
+                "AutoPublishAlias": "live",
+                "Events": {
+                    "SignIn": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/SignIn/",
+                            "Method": "post",
                             "RestApiId": {
                                 "Ref": "ApiGateway"
                             }
