@@ -20,10 +20,10 @@ exports.handler = async (event, context, callback) => {
 
     try {
         switch (event.httpMethod) {
-            case "PUT": 
+            case "GET": 
                 switch (event.path) {
-                    case endpointMapping.PUT.Players.path:
-                        console.log("Endpoint: ", endpointMapping.PUT.Players.description);
+                    case endpointMapping.GET.Players.path:
+                        console.log("Endpoint: ", endpointMapping.GET.Players.description);
                         await getPlayers(body, axiosInstance);
                         return callback(null, returnObj);
                     default:
