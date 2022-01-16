@@ -1,6 +1,6 @@
 {
     "GET": {
-        "Players": {
+        "GuildData": {
             "path": "/GuildData/",
             "description": "Get Data for Guild"
         }
