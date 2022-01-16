@@ -75,6 +75,23 @@
                     }
                 }
             }
+        },
+        "AssetLayer": {
+            "Type": "AWS::Serverless::LayerVersion",
+            "Properties": {
+                "LayerName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            { "Ref": "AppName" },
+                            "SignInUser"
+                        ]
+                    ]
+                },
+                "ContentUri": "./LambdaFunction/AssetLayer",
+                "CompatibleRuntimes": [ "nodejs14.x" ],
+                "RetentionPolicy": "Retain"
+            }
         }
     }
 }
