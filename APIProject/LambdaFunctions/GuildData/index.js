@@ -16,7 +16,7 @@ exports.handler = async (event, context, callback) => {
     if(!axiosInstance) {
         axiosInstance = createAxiosInstance(event.headers.Authorization);
     }
-    var body = event.body;
+    var body = JSON.parse(event.body);
 
     try {
         switch (event.httpMethod) {
@@ -24,7 +24,7 @@ exports.handler = async (event, context, callback) => {
                 switch (event.path) {
                     case endpointMapping.GET.GuildData.path:
                         console.log("Endpoint: ", endpointMapping.GET.GuildData.description);
-                        await getGuildData(body, axiosInstance);
+                        await getGuildData(body);
                         return callback(null, returnObj);
                     default:
                         returnObj.body = "Path not found";
@@ -45,7 +45,7 @@ exports.handler = async (event, context, callback) => {
     }
 };
 
-async function getGuildData() {
+async function getGuildData(body) {
     await axiosInstance.post('https://api.swgoh.help/swgoh/guilds', { allycodes: body.allyCodes })
         .then((data) => {
             console.log("Success", data);
