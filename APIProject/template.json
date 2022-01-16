@@ -94,7 +94,7 @@
                 "AutoPublishAlias": "live",
                 "Layers": [
                     {
-                        "Fn::GetAtt": [ "AssetLayer", "Arn" ]
+                        "Ref": "AssetLayer"
                     }
                 ],
                 "Events": {
