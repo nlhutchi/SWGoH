@@ -123,7 +123,7 @@
                         ]
                     ]
                 },
-                "ContentUri": "./LambdaFunction/AssetLayer",
+                "ContentUri": "./LambdaFunctions/AssetLayer",
                 "CompatibleRuntimes": [ "nodejs14.x" ],
                 "RetentionPolicy": "Retain"
             }
