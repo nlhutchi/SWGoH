@@ -91,6 +91,7 @@
                 "CodeUri": "./LambdaFunctions/GuildData",
                 "Handler": "index.handler",
                 "Runtime": "nodejs14.x",
+                "Timeout": 9,
                 "AutoPublishAlias": "live",
                 "Layers": [
                     {
