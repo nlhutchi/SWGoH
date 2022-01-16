@@ -76,6 +76,41 @@
                 }
             }
         },
+        "GuildData": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "FunctionName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            { "Ref": "AppName" },
+                            "GuildData"
+                        ]
+                    ]
+                },
+                "CodeUri": "./LambdaFunctions/GuildData",
+                "Handler": "index.handler",
+                "Runtime": "nodejs14.x",
+                "AutoPublishAlias": "live",
+                "Layers": [
+                    {
+                        "Fn::GetAtt": [ "AssetLayer", "Arn" ]
+                    }
+                ],
+                "Events": {
+                    "GuildData": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/GuildData/",
+                            "Method": "get",
+                            "RestApiId": {
+                                "Ref": "ApiGateway"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "AssetLayer": {
             "Type": "AWS::Serverless::LayerVersion",
             "Properties": {
