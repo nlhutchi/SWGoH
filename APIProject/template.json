@@ -126,6 +126,9 @@
                 "ContentUri": "./LambdaFunctions/AssetLayer",
                 "CompatibleRuntimes": [ "nodejs14.x" ],
                 "RetentionPolicy": "Retain"
+            },
+            "Metadata": {
+                "BuildMethod": "nodejs14.x"
             }
         }
     }
