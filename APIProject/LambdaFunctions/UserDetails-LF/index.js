@@ -16,7 +16,7 @@ exports.handler = async (event, context, callback) => {
     if(!axiosInstance) {
         axiosInstance = createAxiosInstance(event.headers.Authorization);
     }
-    var body = event.body;
+    var body = JSON.parse(event.body);
     console.log('body', body)
     console.log(typeof body)
 
