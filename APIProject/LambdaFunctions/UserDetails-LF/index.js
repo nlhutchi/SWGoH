@@ -24,7 +24,7 @@ exports.handler = async (event, context, callback) => {
                 switch (event.path) {
                     case endpointMapping.GET.Players.path:
                         console.log("Endpoint: ", endpointMapping.GET.Players.description);
-                        await getPlayers(body, axiosInstance);
+                        await getPlayers(body);
                         return callback(null, returnObj);
                     default:
                         returnObj.body = "Path not found";
@@ -45,7 +45,7 @@ exports.handler = async (event, context, callback) => {
     }
 };
 
-async function getPlayers() {
+async function getPlayers(body) {
     await axiosInstance.post('https://api.swgoh.help/swgoh/players', { allyCodes: body.allyCodes })
         .then((data) => {
             console.log("Success", data);
