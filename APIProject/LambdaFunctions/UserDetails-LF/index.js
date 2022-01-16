@@ -48,7 +48,7 @@ exports.handler = async (event, context, callback) => {
 };
 
 async function getPlayers(body) {
-    await axiosInstance.post('https://api.swgoh.help/swgoh/players', { allyCodes: body.allyCodes })
+    await axiosInstance.post('https://api.swgoh.help/swgoh/players', { allycodes: body.allyCodes })
         .then((data) => {
             console.log("Success", data);
             returnObj.body = JSON.stringify({ ...data.data });
