@@ -1,5 +1,5 @@
 {
-    "PUT": {
+    "GET": {
         "Players": {
             "path": "/Players/",
             "description": "Get player data from provided allyCodes"
