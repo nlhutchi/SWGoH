@@ -17,6 +17,8 @@ exports.handler = async (event, context, callback) => {
         axiosInstance = createAxiosInstance(event.headers.Authorization);
     }
     var body = event.body;
+    console.log('body', body)
+    console.log(typeof body)
 
     try {
         switch (event.httpMethod) {
