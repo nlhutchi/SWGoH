@@ -23,7 +23,7 @@ exports.handler = async (event, context, callback) => {
             case "GET": 
                 switch (event.path) {
                     case endpointMapping.GET.GuildData.path:
-                        console.log("Endpoint: ", endpointMapping.GET.Players.description);
+                        console.log("Endpoint: ", endpointMapping.GET.GuildData.description);
                         await getGuildData(body, axiosInstance);
                         return callback(null, returnObj);
                     default:
