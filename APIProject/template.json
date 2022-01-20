@@ -31,7 +31,6 @@
                 "CodeUri": "./LambdaFunctions/UserDetails-LF",
                 "Handler": "index.handler",
                 "Runtime": "nodejs14.x",
-                "AutoPublishAlias": "live",
                 "Events": {
                     "PlayerData": {
                         "Type": "Api",
@@ -61,7 +60,6 @@
                 "CodeUri": "./LambdaFunctions/SignInUser",
                 "Handler": "index.handler",
                 "Runtime": "nodejs14.x",
-                "AutoPublishAlias": "live",
                 "Events": {
                     "SignIn": {
                         "Type": "Api",
@@ -92,7 +90,6 @@
                 "Handler": "index.handler",
                 "Runtime": "nodejs14.x",
                 "Timeout": 9,
-                "AutoPublishAlias": "live",
                 "Layers": [
                     {
                         "Ref": "AssetLayer"
