@@ -7,6 +7,12 @@
             "Default": "SWGoH-Api"
         }
     },
+    "Globals": {
+        "Function": {
+            "Runtime": "nodejs14.x",
+            "Handler": "index.handler"
+        }
+    }
     "Resources": {
         "ApiGateway": {
             "Type": "AWS::Serverless::Api",
@@ -29,8 +35,6 @@
                     ]
                 },
                 "CodeUri": "./LambdaFunctions/UserDetails-LF",
-                "Handler": "index.handler",
-                "Runtime": "nodejs14.x",
                 "Events": {
                     "PlayerData": {
                         "Type": "Api",
@@ -58,8 +62,12 @@
                     ]
                 },
                 "CodeUri": "./LambdaFunctions/SignInUser",
-                "Handler": "index.handler",
-                "Runtime": "nodejs14.x",
+                "Timeout": 9,
+                "Layers": [
+                    {
+                        "Ref": "AssetLayer"
+                    }
+                ],
                 "Events": {
                     "SignIn": {
                         "Type": "Api",
@@ -87,8 +95,6 @@
                     ]
                 },
                 "CodeUri": "./LambdaFunctions/GuildData",
-                "Handler": "index.handler",
-                "Runtime": "nodejs14.x",
                 "Timeout": 9,
                 "Layers": [
                     {
