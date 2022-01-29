@@ -19,7 +19,7 @@ jobs:
         run: npm install
       - name: Generate build
         working-directory: UIProject
-        run: npm run build
+        run: CI=false npm run build
       # Share artifact inside workflow
       - name: Share artifact inside workflow
         uses: actions/upload-artifact@v1
