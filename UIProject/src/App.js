@@ -1,11 +1,28 @@
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import './App.css';
 
 function App() {
+
   return (
-    <div className="App">
-      SWGoH UI
-    </div>
+    <Router history={Router.browserHistory}>
+      <Routes>
+          <Route
+              path="/"
+              element={<div>InitializeApplication</div>}
+          />
+          <Route path="/Guild" element={<div>Guild</div>} />
+      </Routes>
+    </Router>
   );
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+  };
+}
+
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
