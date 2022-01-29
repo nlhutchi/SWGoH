@@ -9,7 +9,7 @@ function App() {
       <Routes>
           <Route
               path="/"
-              element={<div>InitializeApplication</div>}
+              element={<div>Initialize Application</div>}
           />
           <Route path="/Guild" element={<div>Guild</div>} />
       </Routes>
