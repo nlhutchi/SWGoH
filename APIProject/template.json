@@ -106,7 +106,7 @@
                         "Type": "Api",
                         "Properties": {
                             "Path": "/GuildData/",
-                            "Method": "get",
+                            "Method": "post",
                             "RestApiId": {
                                 "Ref": "ApiGateway"
                             }
