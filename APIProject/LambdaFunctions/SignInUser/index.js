@@ -38,7 +38,8 @@ async function signInUser() {
     await axiosInstance.post('https://api.swgoh.help/auth/signin', Object.keys(params).map((key) => `${key}=${encodeURIComponent(params[key])}`).join('&'))
         .then((data) => {
             console.log("Success", data);
-            returnObj.body = JSON.stringify({ ...data.data });
+            var expirationTime = new Date().getTime() + data.data.expires_in;
+            returnObj.body = JSON.stringify({ ...data.data, expiration_time: expirationTime });
             returnObj.statusCode = 200;
         })
         .catch((err) => {
