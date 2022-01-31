@@ -20,10 +20,10 @@ exports.handler = async (event, context, callback) => {
 
     try {
         switch (event.httpMethod) {
-            case "GET": 
+            case "POST": 
                 switch (event.path) {
-                    case endpointMapping.GET.GuildData.path:
-                        console.log("Endpoint: ", endpointMapping.GET.GuildData.description);
+                    case endpointMapping.POST.GuildData.path:
+                        console.log("Endpoint: ", endpointMapping.POST.GuildData.description);
                         await getGuildData(body);
                         return callback(null, returnObj);
                     default:
