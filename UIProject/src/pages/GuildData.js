@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import useToken from '../components/useToken';
 import APIEndPoints from '../services/api';
+import GuildMembers from '../components/GuildMembers';
+import { setGuildMasterData } from '../actions/GuildDataActions';
 
-function GuildData() {
+function GuildData(props) {
     const { token, setToken } = useToken();
 
     useEffect(async () => {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         await axios({
             method: 'post',
             url: APIEndPoints.GUILD_DATA,
@@ -18,14 +20,15 @@ function GuildData() {
                 ]
             }
         })
-            .then((data) => {
-                console.log('data', data)
+            .then((response) => {
+                console.log('data', response.data);
+                props.setGuildMasterData(response.data[0]);
             });
     }, []);
   
     return (
         <div>
-            <p>Guild Data</p>
+            <GuildMembers/>
         </div>
     );
 }
@@ -36,6 +39,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    setGuildMasterData: (guildMasterData) => dispatch(setGuildMasterData(guildMasterData))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuildData);

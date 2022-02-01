@@ -102,7 +102,7 @@
                     ]
                 },
                 "CodeUri": "./LambdaFunctions/GuildData",
-                "Timeout": 9,
+                "Timeout": 12,
                 "Layers": [
                     {
                         "Ref": "AssetLayer"

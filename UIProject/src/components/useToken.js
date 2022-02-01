@@ -6,7 +6,7 @@ export default function useToken() {
         console.log('get token', tokenString)
         const userToken = JSON.parse(tokenString);
         console.log('time', new Date().getTime())
-        return userToken.expiration_time > new Date().getTime() ? userToken?.access_token : undefined;
+        return userToken && userToken.expiration_time > new Date().getTime() ? userToken?.access_token : undefined;
     };
 
     const [token, setToken] = useState(getToken());
