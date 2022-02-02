@@ -15,15 +15,17 @@ function App() {
     }
     
     return (
-        <Router history={Router.browserHistory}>
-            <Routes>
-                <Route
-                    path="/"
-                    element={<InitializeData/>}
-                />
-                <Route path="/Guild" element={<GuildData/>} />
-            </Routes>
-        </Router>
+        <div className='App' style={{ width: window.innerWidth}}>
+            <Router history={Router.browserHistory}>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={<InitializeData/>}
+                    />
+                    <Route path="/Guild" element={<GuildData/>} />
+                </Routes>
+            </Router>
+        </div>
     );
 }
 

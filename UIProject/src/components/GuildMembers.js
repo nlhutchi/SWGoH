@@ -5,7 +5,8 @@ import MemberCard from './MemberCard';
 
 const useStyles = makeStyles({
     wrapper: {
-        display: 'flex'
+        display: 'flex',
+        flexWrap: 'wrap'
     }
 });
 
