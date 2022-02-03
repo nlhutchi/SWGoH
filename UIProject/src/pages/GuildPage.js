@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { makeStyles } from '@mui/styles';
 import useToken from '../components/useToken';
 import APIEndPoints from '../services/api';
 import GuildMembers from '../components/GuildMembers';
 import { setGuildMasterData } from '../actions/GuildDataActions';
 
-function GuildData(props) {
+const useStyles = makeStyles({
+    guildTitle: {
+
+    }
+});
+
+function GuildPage(props) {
     const { token, setToken } = useToken();
+    const classes = useStyles();
 
     useEffect(async () => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -28,6 +36,7 @@ function GuildData(props) {
   
     return (
         <div>
+            <div className={classes.guildTitle}>Koolaid Men</div>
             <GuildMembers/>
         </div>
     );
@@ -35,6 +44,7 @@ function GuildData(props) {
 
 function mapStateToProps(state) {
     return {
+        guildMasterData: state.GuildDataReducer.guildMasterData
     };
 }
 
@@ -42,4 +52,4 @@ const mapDispatchToProps = (dispatch) => ({
     setGuildMasterData: (guildMasterData) => dispatch(setGuildMasterData(guildMasterData))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GuildData);
+export default connect(mapStateToProps, mapDispatchToProps)(GuildPage);

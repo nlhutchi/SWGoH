@@ -18,7 +18,11 @@ function GuildMembers(props) {
                 props.guildMasterData && props.guildMasterData.roster.map((member) => {
                     return <MemberCard 
                         key={member.id}
+                        allyCode={member.allyCode}
                         memberName={member.name}
+                        gp={member.gp}
+                        gpChar={member.gpChar}
+                        gpShip={member.gpShip}
                     />
                 })
             }

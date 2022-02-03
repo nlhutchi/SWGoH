@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import InitializeData from './pages/InitializeData';
-import GuildData from './pages/GuildData';
+import GuildPage from './pages/GuildPage';
 import Login from './pages/Login';
+import PlayerPage from './pages/PlayerPage';
 import useToken from './components/useToken';
 import './App.css';
 
@@ -22,7 +23,8 @@ function App() {
                         path="/"
                         element={<InitializeData/>}
                     />
-                    <Route path="/Guild" element={<GuildData/>} />
+                    <Route path="/Guild" element={<GuildPage/>} />
+                    <Route path="/Player/:allyCode/" exact component={PlayerPage} />
                 </Routes>
             </Router>
         </div>
