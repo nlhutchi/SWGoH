@@ -20,6 +20,17 @@ exports.handler = async (event, context, callback) => {
 
     try {
         switch (event.httpMethod) {
+            case "GET": 
+                switch (event.resource) {
+                    case endpointMapping.GET.GuildData.path:
+                        console.log("Endpoint: ", endpointMapping.GET.GuildData.description);
+                        await getGuildDataGG(event.path.split("/")[3]);
+                        return callback(null, returnObj);
+                    default:
+                        returnObj.body = "Path not found";
+                        returnObj.statusCode = 404;
+                        return callback(null, returnObj);
+                }
             case "POST": 
                 switch (event.path) {
                     case endpointMapping.POST.GuildData.path:
@@ -57,6 +68,20 @@ async function getGuildData(body) {
             returnObj.body = JSON.stringify({ message: 'failed', details: err });
             returnObj.statusCode = 400;
         })
+}
+
+async function getGuildDataGG(guildId) {
+    await axiosInstance.get(`https://swgoh.gg/api/guild/${guildId}/`)
+        .then((data) => {
+            console.log("Success", data);
+            returnObj.body = JSON.stringify({ ...data.data });
+            returnObj.statusCode = 200;
+        })
+        .catch((err) => {
+            console.log("Error", err);
+            returnObj.body = JSON.stringify({ message: 'failed', details: err });
+            returnObj.statusCode = 400;
+        });
 }
 
 function createAxiosInstance(auth) {

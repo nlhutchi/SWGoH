@@ -1,4 +1,10 @@
 {
+    "GET": {
+        "GuildData": {
+            "path": "/GuildData/{proxy+}",
+            "description": "Get Data for Guild(swgoh.gg)"
+        }
+    },
     "POST": {
         "GuildData": {
             "path": "/GuildData/",
