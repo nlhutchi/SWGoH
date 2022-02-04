@@ -14,7 +14,7 @@ var returnObj = {
 exports.handler = async (event, context, callback) => {
     console.log('Event', event);
     if(!axiosInstance) {
-        axiosInstance = createAxiosInstance(event.headers.Authorization);
+        axiosInstance = createAxiosInstance();
     }
     var body = JSON.parse(event.body);
 
@@ -24,7 +24,7 @@ exports.handler = async (event, context, callback) => {
                 switch (event.resource) {
                     case endpointMapping.GET.GuildData.path:
                         console.log("Endpoint: ", endpointMapping.GET.GuildData.description);
-                        await getGuildDataGG(event.path.split("/")[3]);
+                        await getGuildDataGG(event.path.split("/")[2]);
                         return callback(null, returnObj);
                     default:
                         returnObj.body = "Path not found";
@@ -84,12 +84,11 @@ async function getGuildDataGG(guildId) {
         });
 }
 
-function createAxiosInstance(auth) {
+function createAxiosInstance() {
     return axios.create({
         headers: {
             Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: auth,
+            "Content-Type": "application/json"
         },
     });
 }
