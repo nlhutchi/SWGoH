@@ -71,6 +71,7 @@ async function getGuildData(body) {
 }
 
 async function getGuildDataGG(guildId) {
+    console.log('getGuildDataGG')
     await axiosInstance.get(`https://swgoh.gg/api/guild/${guildId}/`)
         .then((data) => {
             console.log("Success", data);
