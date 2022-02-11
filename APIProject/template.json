@@ -142,7 +142,7 @@
             "Type": "AWS::Lambda::EventInvokeConfig",
             "Properties": {
                 "FunctionName": { "Ref": "GuildData" },
-                "MaximumEventAgeInSeconds": 30,
+                "MaximumEventAgeInSeconds": 60,
                 "MaximumRetryAttempts": 1,
                 "Qualifier": { "Fn::GetAtt": [ "GuildDataVersion", "Version" ] }
             }
