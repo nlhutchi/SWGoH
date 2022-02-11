@@ -132,12 +132,19 @@
                 }
             }
         },
+        "GuildDataVersion": {
+            "Type": "AWS::Lambda::Version",
+            "Properties": {
+                "FunctionName": { "Ref": "GuildData" }
+            }
+        },
         "GuildDataAsync": {
             "Type": "AWS::Lambda::EventInvokeConfig",
             "Properties": {
                 "FunctionName": { "Ref": "GuildData" },
                 "MaximumEventAgeInSeconds": 30,
-                "MaximumRetryAttempts": 1
+                "MaximumRetryAttempts": 1,
+                "Qualifier": { "Fn::GetAtt": [ "GuildDataVersion", "Version" ] }
             }
         },
         "AssetLayer": {
