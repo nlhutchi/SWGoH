@@ -132,6 +132,14 @@
                 }
             }
         },
+        "GuildDataAsync": {
+            "Type": "AWS::Lambda::EventInvokeConfig",
+            "Properties": {
+                "FunctionName": { "Ref": "GuildData" },
+                "MaximumEventAgeInSeconds": 30,
+                "MaximumRetryAttempts": 1
+            }
+        },
         "AssetLayer": {
             "Type": "AWS::Serverless::LayerVersion",
             "Properties": {
