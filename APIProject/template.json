@@ -20,14 +20,7 @@
                 "Name": { "Ref": "AppName" },
                 "StageName": "SWGoH",
                 "EndpointConfiguration": "REGIONAL",
-                "DefinitionBody": {
-                    "Fn::Transform": {
-                        "Name": "AWS::Include",
-                        "Parameters": {
-                            "Location": "swagger.json"
-                        }
-                    }
-                }
+                "DefinitionUri": "./swagger.json"
             }
         },
         "UserDetailsLF": {
@@ -42,7 +35,19 @@
                         ]
                     ]
                 },
-                "CodeUri": "./LambdaFunctions/UserDetails-LF"
+                "CodeUri": "./LambdaFunctions/UserDetails-LF",
+                "Events": {
+                    "PlayerData": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/Players/",
+                            "Method": "get",
+                            "RestApiId": {
+                                "Ref": "ApiGateway"
+                            }
+                        }
+                    }
+                }
             }
         },
         "SignInUser": {
@@ -63,7 +68,19 @@
                     {
                         "Ref": "AssetLayer"
                     }
-                ]
+                ],
+                "Events": {
+                    "SignIn": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/SignIn/",
+                            "Method": "post",
+                            "RestApiId": {
+                                "Ref": "ApiGateway"
+                            }
+                        }
+                    }
+                }
             }
         },
         "GuildData": {
@@ -84,7 +101,29 @@
                     {
                         "Ref": "AssetLayer"
                     }
-                ]
+                ],
+                "Events": {
+                    "GetGuildData": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/GuildData/{proxy+}",
+                            "Method": "get",
+                            "RestApiId": {
+                                "Ref": "ApiGateway"
+                            }
+                        }
+                    },
+                    "GuildData": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/GuildData/",
+                            "Method": "post",
+                            "RestApiId": {
+                                "Ref": "ApiGateway"
+                            }
+                        }
+                    }
+                }
             }
         },
         "AssetLayer": {
