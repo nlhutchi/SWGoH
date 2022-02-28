@@ -42,19 +42,7 @@
                         ]
                     ]
                 },
-                "CodeUri": "./LambdaFunctions/UserDetails-LF",
-                "Events": {
-                    "PlayerData": {
-                        "Type": "Api",
-                        "Properties": {
-                            "Path": "/Players/",
-                            "Method": "get",
-                            "RestApiId": {
-                                "Ref": "ApiGateway"
-                            }
-                        }
-                    }
-                }
+                "CodeUri": "./LambdaFunctions/UserDetails-LF"
             }
         },
         "SignInUser": {
@@ -75,19 +63,7 @@
                     {
                         "Ref": "AssetLayer"
                     }
-                ],
-                "Events": {
-                    "SignIn": {
-                        "Type": "Api",
-                        "Properties": {
-                            "Path": "/SignIn/",
-                            "Method": "post",
-                            "RestApiId": {
-                                "Ref": "ApiGateway"
-                            }
-                        }
-                    }
-                }
+                ]
             }
         },
         "GuildData": {
@@ -108,29 +84,7 @@
                     {
                         "Ref": "AssetLayer"
                     }
-                ],
-                "Events": {
-                    "GetGuildData": {
-                        "Type": "Api",
-                        "Properties": {
-                            "Path": "/GuildData/{proxy+}",
-                            "Method": "get",
-                            "RestApiId": {
-                                "Ref": "ApiGateway"
-                            }
-                        }
-                    },
-                    "GuildData": {
-                        "Type": "Api",
-                        "Properties": {
-                            "Path": "/GuildData/",
-                            "Method": "post",
-                            "RestApiId": {
-                                "Ref": "ApiGateway"
-                            }
-                        }
-                    }
-                }
+                ]
             }
         },
         "AssetLayer": {
