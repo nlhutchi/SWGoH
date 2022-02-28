@@ -1,152 +1,248 @@
 {
     "swagger" : "2.0",
     "info" : {
-        "version" : "1.0",
-        "title" : "SWGoH-Api"
+      "version" : "1.0",
+      "title" : "SWGoH-Api"
     },
     "host" : "czdz09gn5j.execute-api.us-west-2.amazonaws.com",
     "basePath" : "/SWGoH",
     "schemes" : [ "https" ],
     "paths" : {
-        "/GuildData" : {
-            "post" : {
-                "responses" : { },
-                "x-amazon-apigateway-integration": {
-                    "httpMethod": "post",
-                    "type": "aws_proxy",
-                    "uri": {
-                        "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GuildData.Arn}/invocations"
-                    }
-                }
-            },
-            "options" : {
-                "consumes" : [ "application/json" ],
-                "produces" : [ "application/json" ],
-                "responses" : {
-                    "200" : {
-                        "description" : "200 response",
-                        "headers" : {
-                            "Access-Control-Allow-Origin" : {
-                                "type" : "string"
-                            },
-                            "Access-Control-Allow-Methods" : {
-                                "type" : "string"
-                            },
-                            "Access-Control-Allow-Headers" : {
-                                "type" : "string"
-                            }
-                        }
-                    }
-                }
-            }
+      "/GuildData" : {
+        "post" : {
+          "responses" : { },
+          "x-amazon-apigateway-integration" : {
+            "httpMethod" : "POST",
+            "uri" : "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:417771366565:function:SWGoH-Api-GuildData/invocations",
+            "passthroughBehavior" : "when_no_match",
+            "type" : "aws_proxy"
+          }
         },
-        "/GuildData/{proxy+}" : {
-            "get" : {
-                "parameters" : [ {
-                    "name" : "proxy",
-                    "in" : "path",
-                    "required" : true,
-                    "type" : "string"
-                } ],
-                "responses" : { },
-                "x-amazon-apigateway-integration": {
-                    "httpMethod": "post",
-                    "type": "aws_proxy",
-                    "uri": {
-                        "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GuildData.Arn}/invocations"
-                    }
+        "options" : {
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "responses" : {
+            "200" : {
+              "description" : "200 response",
+              "headers" : {
+                "Access-Control-Allow-Origin" : {
+                  "type" : "string"
+                },
+                "Access-Control-Allow-Methods" : {
+                  "type" : "string"
+                },
+                "Access-Control-Allow-Headers" : {
+                  "type" : "string"
                 }
-            },
-            "options" : {
-                "consumes" : [ "application/json" ],
-                "produces" : [ "application/json" ],
-                "parameters" : [ {
-                    "name" : "proxy",
-                    "in" : "path",
-                    "required" : true,
-                    "type" : "string"
-                } ],
-                "responses" : {
-                    "200" : {
-                        "description" : "200 response",
-                        "headers" : {
-                            "Access-Control-Allow-Origin" : {
-                                "type" : "string"
-                            },
-                            "Access-Control-Allow-Methods" : {
-                                "type" : "string"
-                            },
-                            "Access-Control-Allow-Headers" : {
-                                "type" : "string"
-                            }
-                        }
-                    }
-                }
+              }
             }
-        },
-        "/Players" : {
-            "get" : {
-                "responses" : { },
-                "x-amazon-apigateway-integration": {
-                    "httpMethod": "post",
-                    "type": "aws_proxy",
-                    "uri": {
-                        "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UserDetailsLF.Arn}/invocations"
-                    }
+          },
+          "x-amazon-apigateway-integration" : {
+            "responses" : {
+              "default" : {
+                "statusCode" : "200",
+                "responseParameters" : {
+                  "method.response.header.Access-Control-Allow-Methods" : "'GET,PUT,POST,DELETE,OPTIONS'",
+                  "method.response.header.Access-Control-Allow-Headers" : "'*'",
+                  "method.response.header.Access-Control-Allow-Origin" : "'*'"
+                },
+                "responseTemplates" : {
+                  "application/json" : "{}\n"
                 }
+              }
             },
-            "options" : {
-                "consumes" : [ "application/json" ],
-                "produces" : [ "application/json" ],
-                "responses" : {
-                    "200" : {
-                        "description" : "200 response",
-                        "headers" : {
-                            "Access-Control-Allow-Origin" : {
-                                "type" : "string"
-                            },
-                            "Access-Control-Allow-Methods" : {
-                                "type" : "string"
-                            },
-                            "Access-Control-Allow-Headers" : {
-                                "type" : "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/SignIn" : {
-            "post" : {
-                "responses" : { },
-                "x-amazon-apigateway-integration": {
-                    "httpMethod": "post",
-                    "type": "aws_proxy",
-                    "uri": {
-                        "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SignInUser.Arn}/invocations"
-                    }
-                }
+            "requestTemplates" : {
+              "application/json" : "{\n  \"statusCode\" : 200\n}\n"
             },
-            "options" : {
-                "consumes" : [ "application/json" ],
-                "produces" : [ "application/json" ],
-                "responses" : {
-                    "200" : {
-                        "description" : "200 response",
-                        "headers" : {
-                            "Access-Control-Allow-Origin" : {
-                                "type" : "string"
-                            },
-                            "Access-Control-Allow-Methods" : {
-                                "type" : "string"
-                            },
-                            "Access-Control-Allow-Headers" : {
-                                "type" : "string"
-                            }
-                        }
-                    }
-                }
-            }
+            "passthroughBehavior" : "when_no_match",
+            "type" : "mock"
+          }
         }
+      },
+      "/GuildData/{proxy+}" : {
+        "get" : {
+          "parameters" : [ {
+            "name" : "proxy",
+            "in" : "path",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : { },
+          "x-amazon-apigateway-integration" : {
+            "httpMethod" : "POST",
+            "uri" : "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:417771366565:function:SWGoH-Api-GuildData/invocations",
+            "passthroughBehavior" : "when_no_match",
+            "type" : "aws_proxy"
+          }
+        },
+        "options" : {
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "proxy",
+            "in" : "path",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "200 response",
+              "headers" : {
+                "Access-Control-Allow-Origin" : {
+                  "type" : "string"
+                },
+                "Access-Control-Allow-Methods" : {
+                  "type" : "string"
+                },
+                "Access-Control-Allow-Headers" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "x-amazon-apigateway-integration" : {
+            "responses" : {
+              "default" : {
+                "statusCode" : "200",
+                "responseParameters" : {
+                  "method.response.header.Access-Control-Allow-Methods" : "'GET,PUT,POST,DELETE,OPTIONS'",
+                  "method.response.header.Access-Control-Allow-Headers" : "'*'",
+                  "method.response.header.Access-Control-Allow-Origin" : "'*'"
+                },
+                "responseTemplates" : {
+                  "application/json" : "{}\n"
+                }
+              }
+            },
+            "requestTemplates" : {
+              "application/json" : "{\n  \"statusCode\" : 200\n}\n"
+            },
+            "passthroughBehavior" : "when_no_match",
+            "type" : "mock"
+          }
+        }
+      },
+      "/Players" : {
+        "get" : {
+          "responses" : { },
+          "x-amazon-apigateway-integration" : {
+            "httpMethod" : "POST",
+            "uri" : "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:417771366565:function:SWGoH-Api-UserDetails-LF/invocations",
+            "passthroughBehavior" : "when_no_match",
+            "type" : "aws_proxy"
+          }
+        },
+        "options" : {
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "responses" : {
+            "200" : {
+              "description" : "200 response",
+              "headers" : {
+                "Access-Control-Allow-Origin" : {
+                  "type" : "string"
+                },
+                "Access-Control-Allow-Methods" : {
+                  "type" : "string"
+                },
+                "Access-Control-Allow-Headers" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "x-amazon-apigateway-integration" : {
+            "responses" : {
+              "default" : {
+                "statusCode" : "200",
+                "responseParameters" : {
+                  "method.response.header.Access-Control-Allow-Methods" : "'GET,PUT,POST,DELETE,OPTIONS'",
+                  "method.response.header.Access-Control-Allow-Headers" : "'*'",
+                  "method.response.header.Access-Control-Allow-Origin" : "'*'"
+                },
+                "responseTemplates" : {
+                  "application/json" : "{}\n"
+                }
+              }
+            },
+            "requestTemplates" : {
+              "application/json" : "{\n  \"statusCode\" : 200\n}\n"
+            },
+            "passthroughBehavior" : "when_no_match",
+            "type" : "mock"
+          }
+        }
+      },
+      "/SWGoH-Api-GuildData" : {
+        "x-amazon-apigateway-any-method" : {
+          "responses" : {
+            "200" : {
+              "description" : "200 response"
+            }
+          },
+          "x-amazon-apigateway-integration" : {
+            "httpMethod" : "POST",
+            "uri" : "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:417771366565:function:SWGoH-Api-GuildData/invocations",
+            "responses" : {
+              ".*" : {
+                "statusCode" : "200"
+              }
+            },
+            "passthroughBehavior" : "when_no_match",
+            "type" : "aws_proxy"
+          }
+        }
+      },
+      "/SignIn" : {
+        "post" : {
+          "responses" : { },
+          "x-amazon-apigateway-integration" : {
+            "httpMethod" : "POST",
+            "uri" : "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:417771366565:function:SWGoH-Api-SignInUser/invocations",
+            "passthroughBehavior" : "when_no_match",
+            "type" : "aws_proxy"
+          }
+        },
+        "options" : {
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "responses" : {
+            "200" : {
+              "description" : "200 response",
+              "headers" : {
+                "Access-Control-Allow-Origin" : {
+                  "type" : "string"
+                },
+                "Access-Control-Allow-Methods" : {
+                  "type" : "string"
+                },
+                "Access-Control-Allow-Headers" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "x-amazon-apigateway-integration" : {
+            "responses" : {
+              "default" : {
+                "statusCode" : "200",
+                "responseParameters" : {
+                  "method.response.header.Access-Control-Allow-Methods" : "'GET,PUT,POST,DELETE,OPTIONS'",
+                  "method.response.header.Access-Control-Allow-Headers" : "'*'",
+                  "method.response.header.Access-Control-Allow-Origin" : "'*'"
+                },
+                "responseTemplates" : {
+                  "application/json" : "{}\n"
+                }
+              }
+            },
+            "requestTemplates" : {
+              "application/json" : "{\n  \"statusCode\" : 200\n}\n"
+            },
+            "passthroughBehavior" : "when_no_match",
+            "type" : "mock"
+          }
+        }
+      }
     }
 }
