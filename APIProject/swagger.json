@@ -10,7 +10,14 @@
     "paths" : {
         "/GuildData" : {
             "post" : {
-                "responses" : { }
+                "responses" : { },
+                "x-amazon-apigateway-integration": {
+                    "httpMethod": "post",
+                    "type": "aws_proxy",
+                    "uri": {
+                        "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GuildData.Arn}/invocations"
+                    }
+                }
             },
             "options" : {
                 "consumes" : [ "application/json" ],
@@ -41,7 +48,14 @@
                     "required" : true,
                     "type" : "string"
                 } ],
-                "responses" : { }
+                "responses" : { },
+                "x-amazon-apigateway-integration": {
+                    "httpMethod": "post",
+                    "type": "aws_proxy",
+                    "uri": {
+                        "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GuildData.Arn}/invocations"
+                    }
+                }
             },
             "options" : {
                 "consumes" : [ "application/json" ],
@@ -72,7 +86,14 @@
         },
         "/Players" : {
             "get" : {
-                "responses" : { }
+                "responses" : { },
+                "x-amazon-apigateway-integration": {
+                    "httpMethod": "post",
+                    "type": "aws_proxy",
+                    "uri": {
+                        "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UserDetailsLF.Arn}/invocations"
+                    }
+                }
             },
             "options" : {
                 "consumes" : [ "application/json" ],
@@ -97,7 +118,14 @@
         },
         "/SignIn" : {
             "post" : {
-                "responses" : { }
+                "responses" : { },
+                "x-amazon-apigateway-integration": {
+                    "httpMethod": "post",
+                    "type": "aws_proxy",
+                    "uri": {
+                        "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SignInUser.Arn}/invocations"
+                    }
+                }
             },
             "options" : {
                 "consumes" : [ "application/json" ],
