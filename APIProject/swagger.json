@@ -4,6 +4,7 @@
       "version" : "1.0",
       "title" : "SWGoH-Api"
     },
+    "host" : "czdz09gn5j.execute-api.us-west-2.amazonaws.com",
     "basePath" : "/SWGoH",
     "schemes" : [ "https" ],
     "paths" : {
