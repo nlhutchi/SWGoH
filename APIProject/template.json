@@ -20,7 +20,14 @@
                 "Name": { "Ref": "AppName" },
                 "StageName": "SWGoH",
                 "EndpointConfiguration": "REGIONAL",
-                "DefinitionUri": "./swagger.json"
+                "DefinitionBody": {
+                    "Fn::Transform": {
+                        "Name": "AWS::Include",
+                        "Parameters": {
+                            "Location": "swagger.json"
+                        }
+                    }
+                }
             }
         },
         "UserDetailsLF": {
