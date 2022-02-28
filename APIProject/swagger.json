@@ -18,7 +18,7 @@
             "requestParameters": {
                 "integration.request.header.X-Amz-Invocation-Type": "'Event'"
             },
-            "type" : "aws_proxy"
+            "type" : "aws"
           }
         },
         "options" : {
