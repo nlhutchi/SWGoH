@@ -70,7 +70,7 @@
           "responses" : { },
           "x-amazon-apigateway-integration" : {
             "httpMethod" : "POST",
-            "uri" : "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GuildData.Arn}/invocations",
+            "uri" : { "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GuildData.Arn}/invocations" },
             "passthroughBehavior" : "when_no_match",
             "type" : "aws_proxy"
           }
@@ -127,7 +127,7 @@
           "responses" : { },
           "x-amazon-apigateway-integration" : {
             "httpMethod" : "POST",
-            "uri" : "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UserDetailsLF.Arn}/invocations",
+            "uri": { "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UserDetailsLF.Arn}/invocations" },
             "passthroughBehavior" : "when_no_match",
             "type" : "aws_proxy"
           }
@@ -178,7 +178,7 @@
           "responses" : { },
           "x-amazon-apigateway-integration" : {
             "httpMethod" : "POST",
-            "uri" : "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SignInUser.Arn}/invocations",
+            "uri" : { "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SignInUser.Arn}/invocations" },
             "passthroughBehavior" : "when_no_match",
             "type" : "aws_proxy"
           }
