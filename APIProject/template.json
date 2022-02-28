@@ -26,7 +26,8 @@
             "Properties": {
                 "Name": { "Ref": "AppName" },
                 "StageName": "SWGoH",
-                "EndpointConfiguration": "REGIONAL"
+                "EndpointConfiguration": "REGIONAL",
+                "DefinitionUri": "./swagger.json"
             }
         },
         "UserDetailsLF": {

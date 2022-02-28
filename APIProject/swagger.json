@@ -1,0 +1,133 @@
+{
+    "swagger" : "2.0",
+    "info" : {
+        "version" : "1.0",
+        "title" : "SWGoH-Api"
+    },
+    "host" : "czdz09gn5j.execute-api.us-west-2.amazonaws.com",
+    "basePath" : "/SWGoH",
+    "schemes" : [ "https" ],
+    "paths" : {
+        "/GuildData" : {
+            "post" : {
+                "responses" : { }
+            },
+            "options" : {
+                "consumes" : [ "application/json" ],
+                "produces" : [ "application/json" ],
+                "responses" : {
+                    "200" : {
+                        "description" : "200 response",
+                        "headers" : {
+                            "Access-Control-Allow-Origin" : {
+                                "type" : "string"
+                            },
+                            "Access-Control-Allow-Methods" : {
+                                "type" : "string"
+                            },
+                            "Access-Control-Allow-Headers" : {
+                                "type" : "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/GuildData/{proxy+}" : {
+            "get" : {
+                "parameters" : [ {
+                    "name" : "proxy",
+                    "in" : "path",
+                    "required" : true,
+                    "type" : "string"
+                } ],
+                "responses" : { }
+            },
+            "options" : {
+                "consumes" : [ "application/json" ],
+                "produces" : [ "application/json" ],
+                "parameters" : [ {
+                    "name" : "proxy",
+                    "in" : "path",
+                    "required" : true,
+                    "type" : "string"
+                } ],
+                "responses" : {
+                    "200" : {
+                        "description" : "200 response",
+                        "headers" : {
+                            "Access-Control-Allow-Origin" : {
+                                "type" : "string"
+                            },
+                            "Access-Control-Allow-Methods" : {
+                                "type" : "string"
+                            },
+                            "Access-Control-Allow-Headers" : {
+                                "type" : "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Players" : {
+            "get" : {
+                "responses" : { }
+            },
+            "options" : {
+                "consumes" : [ "application/json" ],
+                "produces" : [ "application/json" ],
+                "responses" : {
+                    "200" : {
+                        "description" : "200 response",
+                        "headers" : {
+                            "Access-Control-Allow-Origin" : {
+                                "type" : "string"
+                            },
+                            "Access-Control-Allow-Methods" : {
+                                "type" : "string"
+                            },
+                            "Access-Control-Allow-Headers" : {
+                                "type" : "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/SWGoH-Api-GuildData" : {
+            "x-amazon-apigateway-any-method" : {
+                "responses" : {
+                    "200" : {
+                        "description" : "200 response"
+                    }
+                }
+            }
+        },
+        "/SignIn" : {
+            "post" : {
+                "responses" : { }
+            },
+            "options" : {
+                "consumes" : [ "application/json" ],
+                "produces" : [ "application/json" ],
+                "responses" : {
+                    "200" : {
+                        "description" : "200 response",
+                        "headers" : {
+                            "Access-Control-Allow-Origin" : {
+                                "type" : "string"
+                            },
+                            "Access-Control-Allow-Methods" : {
+                                "type" : "string"
+                            },
+                            "Access-Control-Allow-Headers" : {
+                                "type" : "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
