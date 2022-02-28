@@ -11,13 +11,6 @@
         "Function": {
             "Runtime": "nodejs14.x",
             "Handler": "index.handler"
-        },
-        "Api": {
-          "Cors": {
-            "AllowMethods": "'GET,PUT,POST,DELETE,OPTIONS'",
-            "AllowHeaders": "'*'",
-            "AllowOrigin": "'*'"
-          }
         }
     },
     "Resources": {
