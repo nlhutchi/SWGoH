@@ -35,7 +35,7 @@ exports.handler = async (event, context, callback) => {
                 switch (event.path) {
                     case endpointMapping.POST.GuildData.path:
                         console.log("Endpoint: ", endpointMapping.POST.GuildData.description);
-                        await getGuildData(body);
+                        await getGuildDataGG(body.guildId);
                         return callback(null, returnObj);
                     default:
                         returnObj.body = "Path not found";
