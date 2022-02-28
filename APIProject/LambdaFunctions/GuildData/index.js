@@ -16,7 +16,7 @@ exports.handler = async (event, context, callback) => {
     if(!axiosInstance) {
         axiosInstance = createAxiosInstance();
     }
-    var body = JSON.parse(event.body);
+    var body = event.body;
 
     try {
         switch (event.httpMethod) {
