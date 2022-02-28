@@ -4,7 +4,6 @@
       "version" : "1.0",
       "title" : "SWGoH-Api"
     },
-    "host" : "czdz09gn5j.execute-api.us-west-2.amazonaws.com",
     "basePath" : "/SWGoH",
     "schemes" : [ "https" ],
     "paths" : {
@@ -13,7 +12,7 @@
           "responses" : { },
           "x-amazon-apigateway-integration" : {
             "httpMethod" : "POST",
-            "uri" : "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:417771366565:function:SWGoH-Api-GuildData/invocations",
+            "uri" : "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GuildData.Arn}/invocations",
             "passthroughBehavior" : "when_no_match",
             "type" : "aws_proxy"
           }
@@ -70,7 +69,7 @@
           "responses" : { },
           "x-amazon-apigateway-integration" : {
             "httpMethod" : "POST",
-            "uri" : "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:417771366565:function:SWGoH-Api-GuildData/invocations",
+            "uri" : "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GuildData.Arn}/invocations",
             "passthroughBehavior" : "when_no_match",
             "type" : "aws_proxy"
           }
@@ -127,7 +126,7 @@
           "responses" : { },
           "x-amazon-apigateway-integration" : {
             "httpMethod" : "POST",
-            "uri" : "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:417771366565:function:SWGoH-Api-UserDetails-LF/invocations",
+            "uri" : "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UserDetailsLF.Arn}/invocations",
             "passthroughBehavior" : "when_no_match",
             "type" : "aws_proxy"
           }
@@ -173,32 +172,12 @@
           }
         }
       },
-      "/SWGoH-Api-GuildData" : {
-        "x-amazon-apigateway-any-method" : {
-          "responses" : {
-            "200" : {
-              "description" : "200 response"
-            }
-          },
-          "x-amazon-apigateway-integration" : {
-            "httpMethod" : "POST",
-            "uri" : "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:417771366565:function:SWGoH-Api-GuildData/invocations",
-            "responses" : {
-              ".*" : {
-                "statusCode" : "200"
-              }
-            },
-            "passthroughBehavior" : "when_no_match",
-            "type" : "aws_proxy"
-          }
-        }
-      },
       "/SignIn" : {
         "post" : {
           "responses" : { },
           "x-amazon-apigateway-integration" : {
             "httpMethod" : "POST",
-            "uri" : "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:417771366565:function:SWGoH-Api-SignInUser/invocations",
+            "uri" : "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SignInUser.Arn}/invocations",
             "passthroughBehavior" : "when_no_match",
             "type" : "aws_proxy"
           }
