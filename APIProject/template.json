@@ -8,6 +8,13 @@
         }
     },
     "Globals": {
+        "Api": {
+            "Cors": {
+                "AllowMethods": "'GET,PUT,POST,DELETE,OPTIONS'",
+                "AllowHeaders": "'Content-Type,Authorization'",
+                "AllowOrigin": "'*'"
+            }
+        },
         "Function": {
             "Runtime": "nodejs14.x",
             "Handler": "index.handler"
