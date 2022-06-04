@@ -11,6 +11,18 @@ const useStyles = makeStyles({
     button: {
         flexDirection: 'column',
         width: '100%'
+    },
+    userImg: {
+        position: 'absolute'
+    },
+    rankingWrappers: {
+        display: 'flex',
+        flexDirection: 'vertical'
+    },
+    leagueImg: {
+        display: 'flex',
+        flex: 1,
+        width: '30%'
     }
 });
 
@@ -25,16 +37,21 @@ function MemberCard(props) {
                 className={`${classes.button}`}
                 onClick={() => navigate(`/Player/${props.allyCode}`)}
             >
-                <div className={classes.title}>{props.memberName}</div>
+                <div>
+                    <div>
+                        <img className={classes.userImg} src={props.userFrame} />
+                        <img className={classes.UserImg} src={props.userImg} />
+                    </div>
+                    <div className={classes.title}>{props.memberName}</div>
+                </div>
                 <div className={classes.body}>
                     <div>
                         GP: {props.gp}
                     </div>
-                    <div className={classes.ships}>
-                        Character GP: {props.gpChar}
-                    </div>
-                    <div className={classes.character}>
-                        Ship GP: {props.gpShip}
+                    <div className={classes.rankingWrappers}>
+                        <img className={classes.leagueImg} src={``} alt={props.league} />
+                        <img className={classes.leagueImg} src={``} alt={props.league} />
+                        <img className={classes.leagueImg} src={`https://game-assets.swgoh.gg/tex.league_icon_${props.league.toLowerCase()}_blank.png`} alt={props.league} />
                     </div>
                 </div>
             </Button>

@@ -16,27 +16,22 @@ const useStyles = makeStyles({
 function GuildPage(props) {
     const { token, setToken } = useToken();
     const classes = useStyles();
+    var { guildMasterData } = props;
 
     useEffect(async () => {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         await axios({
-            method: 'post',
-            url: APIEndPoints.GUILD_DATA,
-            data: {
-                "allyCodes": [
-                    "315779484"
-                ]
-            }
+            method: 'get',
+            url: APIEndPoints.GUILD_DATA("RE3k7ZxtQ9-x9VArJItrzQ")
         })
             .then((response) => {
                 console.log('data', response.data);
-                props.setGuildMasterData(response.data[0]);
+                props.setGuildMasterData(response.data.data);
             });
     }, []);
   
     return (
         <div>
-            <div className={classes.guildTitle}>Koolaid Men</div>
+            <div className={classes.guildTitle}>{guildMasterData ? guildMasterData.name : '' }</div>
             <GuildMembers/>
         </div>
     );

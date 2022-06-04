@@ -11,9 +11,9 @@ function App() {
     const { token, setToken } = useToken();
   
     console.log('app token', token)
-    if(!token) {
-      return <Login setToken={setToken} />
-    }
+    // if(!token) {
+    //   return <Login setToken={setToken} />
+    // }
     
     return (
         <div className='App' style={{ width: window.innerWidth}}>

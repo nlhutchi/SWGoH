@@ -15,18 +15,19 @@ function GuildMembers(props) {
     return (
         <div className={classes.wrapper}>
             {
-                props.guildMasterData && props.guildMasterData.roster.map((member) => {
-                    return <MemberCard 
-                        key={member.id}
-                        allyCode={member.allyCode}
-                        memberName={member.name}
-                        gp={member.gp}
-                        gpChar={member.gpChar}
-                        gpShip={member.gpShip}
-                    />
-                })
+                props.guildMasterData ?
+                    props.guildMasterData.members.map((member) => {
+                        return <MemberCard 
+                            key={member.ally_code}
+                            allyCode={member.ally_code}
+                            memberName={member.player_name}
+                            gp={member.galactic_power}
+                            league={member.league_name}
+                            userFrame={member.league_frame_image}
+                            userImg={member.portrait_image}
+                        />
+                    }) : null
             }
-            <MemberCard/>
         </div>
     );
 }

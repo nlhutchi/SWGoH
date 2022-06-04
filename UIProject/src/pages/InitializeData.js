@@ -12,7 +12,7 @@ function InitializeData() {
 
     return (
         <div>
-            <p>Initializing Data</p>
+            {/* <p>Initializing Data</p> */}
         </div>
     );
 }
