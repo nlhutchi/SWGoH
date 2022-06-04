@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
 
 const useStyles = makeStyles({
     wrapper: {
@@ -51,7 +52,9 @@ function MemberCard(props) {
                     <div className={classes.rankingWrappers}>
                         <img className={classes.leagueImg} src={``} alt={props.league} />
                         <img className={classes.leagueImg} src={``} alt={props.league} />
-                        <img className={classes.leagueImg} src={`https://game-assets.swgoh.gg/tex.league_icon_${props.league.toLowerCase()}_blank.png`} alt={props.league} />
+                        <Tooltip title={props.league}>
+                            <img className={classes.leagueImg} src={`https://game-assets.swgoh.gg/tex.league_icon_${props.league.toLowerCase()}_blank.png`} alt={props.league} />
+                        </Tooltip>
                     </div>
                 </div>
             </Button>
