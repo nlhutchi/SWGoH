@@ -26,6 +26,10 @@ exports.handler = async (event, context, callback) => {
                         console.log("Endpoint: ", endpointMapping.GET.GuildData.description);
                         await getGuildDataGG(event.path.split("/")[2]);
                         return callback(null, returnObj);
+                    case endpointMapping.GET.MemberData.path:
+                        console.log("Endpoint: ", endpointMapping.GET.MemberData.description);
+                        await getMemberDataGG(event.path.split("/")[2]);
+                        return callback(null, returnObj);
                     default:
                         returnObj.body = "Path not found";
                         returnObj.statusCode = 404;
@@ -70,9 +74,9 @@ async function getGuildData(body) {
         })
 }
 
-async function getGuildDataGG(guildId) {
-    console.log('getGuildDataGG')
-    await axiosInstance.get(`https://swgoh.gg/api/guild/${guildId}/`)
+async function getMemberDataGG(guildId) {
+    console.log('getMemberDataGG')
+    await axiosInstance.get(`http://api.swgoh.gg/player/${allyCode}/`)
         .then((data) => {
             console.log("Success", data);
             returnObj.body = JSON.stringify({ ...data.data });
@@ -85,11 +89,28 @@ async function getGuildDataGG(guildId) {
         });
 }
 
+async function getGuildDataGG(guildId) {
+    console.log('getGuildDataGG')
+    await axiosInstance.get(`http://api.swgoh.gg/guild-profile/${guildId}/`)
+        .then((data) => {
+            console.log("Success", data);
+            returnObj.body = JSON.stringify({ ...data.data });
+            returnObj.statusCode = 200;
+        })
+        .catch((err) => {
+            console.log("Error", err);
+            returnObj.body = JSON.stringify({ message: 'failed', details: err });
+            returnObj.statusCode = 400;
+        });
+}
+
+
 function createAxiosInstance() {
     return axios.create({
         headers: {
             Accept: "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
         },
     });
 }

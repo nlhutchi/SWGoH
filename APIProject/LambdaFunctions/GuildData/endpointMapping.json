@@ -3,6 +3,10 @@
         "GuildData": {
             "path": "/GuildData/{proxy+}",
             "description": "Get Data for Guild(swgoh.gg)"
+        },
+        "MemberData": {
+            "path": "/MemberData/{proxy+}",
+            "description": "Get Data for Member(swgoh.gg)"
         }
     },
     "POST": {
