@@ -119,6 +119,16 @@
                             }
                         }
                     },
+                    "MemberData": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/MemberData/{proxy+}",
+                            "Method": "get",
+                            "RestApiId": {
+                                "Ref": "ApiGateway"
+                            }
+                        }
+                    },
                     "GuildData": {
                         "Type": "Api",
                         "Properties": {
