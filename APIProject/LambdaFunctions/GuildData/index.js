@@ -74,7 +74,7 @@ async function getGuildData(body) {
         })
 }
 
-async function getMemberDataGG(guildId) {
+async function getMemberDataGG(allyCode) {
     console.log('getMemberDataGG')
     await axiosInstance.get(`http://api.swgoh.gg/player/${allyCode}/`)
         .then((data) => {
