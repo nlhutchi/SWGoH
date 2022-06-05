@@ -6,6 +6,7 @@ import useToken from '../components/useToken';
 import APIEndPoints from '../services/api';
 import GuildMembers from '../components/GuildMembers';
 import { setGuildMasterData } from '../actions/GuildDataActions';
+import { setMemberData } from '../actions/MemberDataActions';
 
 const useStyles = makeStyles({
     guildTitle: {
@@ -28,6 +29,21 @@ function GuildPage(props) {
                 props.setGuildMasterData(response.data.data);
             });
     }, []);
+
+    useEffect(() => {
+        if(guildMasterData) {
+            guildMasterData.members.forEach(member => {
+                axios({
+                    method: 'get',
+                    url: APIEndPoints.MEMBER_DATA(member.ally_code)
+                })
+                    .then((response) => {
+                        console.log('data', response.data);
+                        props.setMemberData(response.data.data);
+                    });
+            });
+        }
+    }, [guildMasterData])
   
     return (
         <div>
@@ -44,7 +60,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    setGuildMasterData: (guildMasterData) => dispatch(setGuildMasterData(guildMasterData))
+    setGuildMasterData: (guildMasterData) => dispatch(setGuildMasterData(guildMasterData)),
+    setMemberData: (allyCode, memberData) => dispatch(setMemberData(allyCode, memberData))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuildPage);

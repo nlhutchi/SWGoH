@@ -4,6 +4,7 @@ class APIEndPoints {
 
     static SIGN_IN = this.BASE + 'SignIn/';
     static GUILD_DATA = (guildId) => this.BASE + `GuildData/${guildId}/`;
+    static MEMBER_DATA = (allyCode) => this.BASE + `MemberData/${allyCode}/`;
     static GET_GG_GUILD = (guildId) => `${this.GG_BASE}guild-profile/${guildId}/`;
 }
 
