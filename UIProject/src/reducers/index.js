@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import GuildDataReducer from './GuildDataReducer';
+import MemberDataReducer from './MemberDataReducer';
 
 const initialState = {
     showLoadingScreen: false
@@ -16,5 +17,6 @@ function rootReducer(state = initialState, action) {
 
 export default combineReducers({
     rootReducer,
-    GuildDataReducer
+    GuildDataReducer,
+    MemberDataReducer
 });

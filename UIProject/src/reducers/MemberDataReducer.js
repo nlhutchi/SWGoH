@@ -7,11 +7,16 @@ const initialState = {
 const masterReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_MEMBER_DATA:
-            return Object.assign({}, state, {
-                memberData: {
-                    ...state.memberData,
-                    [action.payload.allyCode]: action.payload.memberData
+            var memberObj = {};
+            console.log(action.payload)
+            action.payload.forEach((memberData) => {
+                console.log(memberData)
+                if(memberData) {
+                    memberObj[memberData.data.ally_code] = memberData;
                 }
+            });
+            return Object.assign({}, state, {
+                memberData: memberObj
             });
         default:
             return state;

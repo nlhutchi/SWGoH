@@ -16,8 +16,9 @@ function GuildMembers(props) {
         <div className={classes.wrapper}>
             {
                 props.guildMasterData ?
-                    props.guildMasterData.members.map((member) => {
+                    props.guildMasterData[props.selectedGuild].members.map((member) => {
                         return <MemberCard 
+                            guildId={props.selectedGuild}
                             key={member.ally_code}
                             allyCode={member.ally_code}
                             memberName={member.player_name}

@@ -36,7 +36,7 @@ function MemberCard(props) {
             <Button 
                 variant="outlined"
                 className={`${classes.button}`}
-                onClick={() => navigate(`/Player/${props.allyCode}`)}
+                onClick={() => navigate(`/Player/${props.allyCode}/`)}
             >
                 <div>
                     <div>
