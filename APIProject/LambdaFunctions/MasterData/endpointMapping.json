@@ -2,7 +2,7 @@
     "GET": {
         "CharacterData": {
             "eventName": "Get Character MasterData",
-            "path": "/MasterData/",
+            "path": "/MasterData/Characters/",
             "description": "Gets character masterData from swgoh gg"
         }
     }
