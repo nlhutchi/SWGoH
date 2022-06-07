@@ -4,7 +4,7 @@ const initialState = {
     memberData: {}
 };
 
-const masterReducer = (state = initialState, action) => {
+const memberReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_MEMBER_DATA:
             var memberObj = {};
@@ -26,4 +26,4 @@ const masterReducer = (state = initialState, action) => {
     }
 };
 
-export default masterReducer;
+export default memberReducer;

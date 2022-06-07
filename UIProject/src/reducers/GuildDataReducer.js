@@ -4,7 +4,7 @@ const initialState = {
     guildMasterData: undefined
 };
 
-const masterReducer = (state = initialState, action) => {
+const guildDataReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_GUILD_MASTER_DATA:
             return Object.assign({}, state, {
@@ -21,4 +21,4 @@ const masterReducer = (state = initialState, action) => {
     }
 };
 
-export default masterReducer;
+export default guildDataReducer;
