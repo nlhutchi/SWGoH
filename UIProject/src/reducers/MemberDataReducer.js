@@ -9,14 +9,17 @@ const masterReducer = (state = initialState, action) => {
         case SET_MEMBER_DATA:
             var memberObj = {};
             console.log(action.payload)
-            action.payload.forEach((memberData) => {
+            action.payload.memberDataArray.forEach((memberData) => {
                 console.log(memberData)
                 if(memberData) {
                     memberObj[memberData.data.ally_code] = memberData;
                 }
             });
             return Object.assign({}, state, {
-                memberData: memberObj
+                memberData: {
+                    ...state.memberData,
+                    [action.payload.guildId]: memberObj
+                }
             });
         default:
             return state;

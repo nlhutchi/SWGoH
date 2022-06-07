@@ -11,11 +11,11 @@ import { setMemberData } from '../actions/MemberDataActions';
 
 const guilds = [
     {
-        label: 'Men',
+        label: 'Koolaid Men',
         value: 'RE3k7ZxtQ9-x9VArJItrzQ'
     },
     {
-        lebel: 'Crew',
+        label: 'Koolaid Crew',
         value: 'I0nWk1NURYeBMypWqPVIQw'
     }
 ];
@@ -39,14 +39,14 @@ function GuildPage(props) {
                 url: APIEndPoints.GUILD_DATA(guild.value)
             })
                 .then((response) => {
-                    console.log('data', response.data);
                     props.setGuildMasterData(response.data.data);
                 });
         }
     }, []);
 
     useEffect(() => {
-        if(guildMasterData) {
+        console.log(props.memberData[selectedGuild.value])
+        if(guildMasterData && !props.memberData[selectedGuild.value]) {
             var promiseArray = [];
             guildMasterData[selectedGuild.value].members.forEach(member => {
                 promiseArray.push(
@@ -55,8 +55,6 @@ function GuildPage(props) {
                         url: APIEndPoints.MEMBER_DATA(member.ally_code)
                     })
                         .then((response) => {
-                            console.log('data', response.data);
-                            //props.setMemberData(response.data);
                             return response.data;
                         })
                         .catch((err) => {
@@ -65,8 +63,7 @@ function GuildPage(props) {
                 );
             });
             Promise.all(promiseArray).then((responses) => {
-                console.log(responses);
-                props.setMemberData(responses);
+                props.setMemberData(selectedGuild.value, responses);
             });
         }
     }, [guildMasterData, selectedGuild])
@@ -78,14 +75,15 @@ function GuildPage(props) {
                 value={selectedGuild}
                 onChange={(e) => {setSelectedGuild(e)}}
             />
-            <GuildMembers selectedGuild={selectedGuild.value}/>
+            <GuildMembers key={`${selectedGuild.value}-members`} selectedGuild={selectedGuild.value}/>
         </div>
     );
 }
 
 function mapStateToProps(state) {
     return {
-        guildMasterData: state.GuildDataReducer.guildMasterData
+        guildMasterData: state.GuildDataReducer.guildMasterData,
+        memberData: state.MemberDataReducer.memberData
     };
 }
 
