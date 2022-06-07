@@ -4,13 +4,16 @@ const initialState = {
     guildMasterData: undefined
 };
 
-const masterReducer = (state = initialState, action) => {
+const guildDataReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_GUILD_MASTER_DATA:
             return Object.assign({}, state, {
                 guildMasterData: {
-                    ...action.payload,
-                    members: action.payload.members.sort((a, b) => b.galactic_power - a.galactic_power)
+                    ...state.guildMasterData,
+                    [action.payload.guild_id]: {
+                        ...action.payload,
+                        members: action.payload.members.sort((a, b) => b.galactic_power - a.galactic_power)
+                    }
                 }
             });
         default:
@@ -18,4 +21,4 @@ const masterReducer = (state = initialState, action) => {
     }
 };
 
-export default masterReducer;
+export default guildDataReducer;

@@ -13,15 +13,17 @@ function PlayerPage(props) {
     const classes = useStyles();
     const { allyCode } = useParams();
 
+    console.log(props.memberData)
     return (
-        <Button className={`col-xs-4 ${classes.wrapper}`}>
-            <p>{allyCode}</p>
-        </Button>
+        <div className={`col-xs-4 ${classes.wrapper}`}>
+            <p>{JSON.stringify(props.memberData[allyCode])}</p>
+        </div>
     );
 }
 
 function mapStateToProps(state) {
     return {
+        memberData: state.MemberDataReducer.memberData
     };
 }
 

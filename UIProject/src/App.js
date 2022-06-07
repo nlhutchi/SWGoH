@@ -24,7 +24,7 @@ function App() {
                         element={<InitializeData/>}
                     />
                     <Route path="/Guild" element={<GuildPage/>} />
-                    <Route path="/Player/:allyCode/" exact component={PlayerPage} />
+                    <Route path="/Player/:allyCode/" element={<PlayerPage />} />
                 </Routes>
             </Router>
         </div>
