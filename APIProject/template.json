@@ -142,6 +142,39 @@
                 }
             }
         },
+        "MasterData": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "FunctionName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            { "Ref": "AppName" },
+                            "MasterData"
+                        ]
+                    ]
+                },
+                "CodeUri": "./LambdaFunctions/MasterData",
+                "Timeout": 10,
+                "Layers": [
+                    {
+                        "Ref": "AssetLayer"
+                    }
+                ],
+                "Events": {
+                    "CharacterData": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/MasterData/Characters",
+                            "Method": "get",
+                            "RestApiId": {
+                                "Ref": "ApiGateway"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "AssetLayer": {
             "Type": "AWS::Serverless::LayerVersion",
             "Properties": {
