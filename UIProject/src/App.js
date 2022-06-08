@@ -1,32 +1,75 @@
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import InitializeData from './pages/InitializeData';
+import ReactLoading from "react-loading";
 import GuildPage from './pages/GuildPage';
 import Login from './pages/Login';
 import PlayerPage from './pages/PlayerPage';
 import useToken from './components/useToken';
+import { makeStyles } from '@mui/styles';
 import './App.css';
+import axios from 'axios';
+import APIEndPoints from './services/api';
+import { setCharacterMasterData } from './actions/MasterDataActions';
 
-function App() {
+const useStyles = makeStyles({
+    loadingSpinner: {
+        display: 'flex',
+        flex: '1',
+        justifyContent: 'center',
+        margin: 10
+    }
+});
+
+function App(props) {
+    const classes = useStyles();
     const { token, setToken } = useToken();
+    const [ isLoading, setIsLoading ] = useState(false);
+    const [ isLoadingError, setIsLoadingError ] = useState(false);
   
     console.log('app token', token)
     // if(!token) {
     //   return <Login setToken={setToken} />
     // }
+
+    useEffect(() => {
+        setIsLoading(true);
+    }, []);
+
+    useEffect(() => {
+        if(isLoading) {
+            loadMasterData();
+        };
+    }, [isLoading]);
+
+    const loadMasterData = async () => {
+        axios({
+            method: 'get',
+            url: APIEndPoints.CHARACTER_DATA
+        })
+            .then((response) => {
+                props.setCharacterMasterData(response.data);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                setIsLoadingError(true);
+            });
+    }
     
     return (
         <div className='App' style={{ width: window.innerWidth}}>
-            <Router history={Router.browserHistory}>
-                <Routes>
-                    <Route
-                        path="/"
-                        element={<InitializeData/>}
-                    />
-                    <Route path="/Guild" element={<GuildPage/>} />
-                    <Route path="/Player/:allyCode/" element={<PlayerPage />} />
-                </Routes>
-            </Router>
+            {
+                isLoading ? 
+                    <div className={classes.loadingSpinner}>
+                        <ReactLoading height={'20%'} width={'20%'} type='spinningBubbles' color='#1976d2'/>
+                    </div> :
+                    <Router history={Router.browserHistory}>
+                        <Routes>
+                            <Route path="/" element={<GuildPage/>} />
+                            <Route path="/Player/:guildId/:allyCode/" element={<PlayerPage />} />
+                        </Routes>
+                    </Router>
+            }
         </div>
     );
 }
@@ -37,7 +80,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    
+    setCharacterMasterData: (characterData) => dispatch(setCharacterMasterData(characterData))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
