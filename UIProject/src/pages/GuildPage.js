@@ -17,6 +17,10 @@ const guilds = [
     {
         label: 'Koolaid Crew',
         value: 'I0nWk1NURYeBMypWqPVIQw'
+    },
+    {
+        label: 'Anarchy Empire',
+        value: '8YJPkrmiT4OAbxpqmYd3PA'
     }
 ];
 

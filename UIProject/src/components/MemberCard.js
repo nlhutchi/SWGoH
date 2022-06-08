@@ -4,6 +4,7 @@ import { makeStyles } from '@mui/styles';
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
+import ArenaTeam from './ArenaTeam';
 
 const useStyles = makeStyles({
     wrapper: {
@@ -36,7 +37,7 @@ function MemberCard(props) {
             <Button 
                 variant="outlined"
                 className={`${classes.button}`}
-                onClick={() => navigate(`/Player/${props.allyCode}/`)}
+                onClick={() => navigate(`/Player/${props.guildId}/${props.allyCode}/`)}
             >
                 <div>
                     <div>
@@ -50,7 +51,9 @@ function MemberCard(props) {
                         GP: {props.gp}
                     </div>
                     <div className={classes.rankingWrappers}>
-                        <img className={classes.leagueImg} src={``} alt={props.league} />
+                        <div className={classes.leagueImg} >
+                            <ArenaTeam />
+                        </div>
                         <img className={classes.leagueImg} src={``} alt={props.league} />
                         <Tooltip title={props.league}>
                             <img className={classes.leagueImg} src={`https://game-assets.swgoh.gg/tex.league_icon_${props.league.toLowerCase()}_blank.png`} alt={props.league} />

@@ -9,7 +9,6 @@ function InitializeData(props) {
     const navigate = useNavigate();
 
     useEffect(async () => {
-        console.log('load data')
         await getCharacterData();
         navigate('/Guild')
     }, []);
