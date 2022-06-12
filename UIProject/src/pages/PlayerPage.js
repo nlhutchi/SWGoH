@@ -18,7 +18,6 @@ function PlayerPage(props) {
     const classes = useStyles();
     const { allyCode, guildId } = useParams();
 
-    console.log(props.memberData)
     return (
         <>
             <div>

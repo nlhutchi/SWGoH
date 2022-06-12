@@ -27,7 +27,6 @@ function App(props) {
     const [ isLoading, setIsLoading ] = useState(false);
     const [ isLoadingError, setIsLoadingError ] = useState(false);
   
-    console.log('app token', token)
     // if(!token) {
     //   return <Login setToken={setToken} />
     // }

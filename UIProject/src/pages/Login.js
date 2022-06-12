@@ -8,8 +8,6 @@ async function loginUser(credentials) {
         url: APIEndPoints.SIGN_IN
       })
         .then((data) => {
-            console.log(data)
-            console.log(data.data)
             return data.data;
         });
 }

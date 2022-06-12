@@ -56,7 +56,7 @@ function MemberCard(props) {
                         </div>
                         <img className={classes.leagueImg} src={``} alt={props.league} />
                         <Tooltip title={props.league}>
-                            <img className={classes.leagueImg} src={`https://game-assets.swgoh.gg/tex.league_icon_${props.league.toLowerCase()}_blank.png`} alt={props.league} />
+                            <img className={classes.leagueImg} src={`https://game-assets.swgoh.gg/tex.league_icon_${props.league && props.league.toLowerCase()}_blank.png`} alt={props.league} />
                         </Tooltip>
                     </div>
                 </div>

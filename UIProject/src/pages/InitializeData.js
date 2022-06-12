@@ -19,7 +19,6 @@ function InitializeData(props) {
             url: APIEndPoints.CHARACTER_DATA
         })
             .then((response) => {
-                console.log(response.data)
                 props.setCharacterMasterData(response.data);
             });
     }

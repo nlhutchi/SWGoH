@@ -6,6 +6,7 @@ import Select from 'react-select';
 import useToken from '../components/useToken';
 import APIEndPoints from '../services/api';
 import GuildMembers from '../components/GuildMembers';
+import GuildBanner from '../components/GuildBanner';
 import { setGuildMasterData } from '../actions/GuildDataActions';
 import { setMemberData } from '../actions/MemberDataActions';
 
@@ -49,7 +50,6 @@ function GuildPage(props) {
     }, []);
 
     useEffect(() => {
-        console.log(props.memberData[selectedGuild.value])
         if(guildMasterData && !props.memberData[selectedGuild.value]) {
             var promiseArray = [];
             guildMasterData[selectedGuild.value].members.forEach(member => {
@@ -74,11 +74,15 @@ function GuildPage(props) {
   
     return (
         <div>
-            <Select 
-                options={guilds}
-                value={selectedGuild}
-                onChange={(e) => {setSelectedGuild(e)}}
-            />
+            <GuildBanner 
+                guildIcon={props.guildMasterData && props.guildMasterData[selectedGuild.value].banner_logo_id} 
+            >
+                <Select 
+                    options={guilds}
+                    value={selectedGuild}
+                    onChange={(e) => {setSelectedGuild(e)}}
+                />
+            </GuildBanner>
             <GuildMembers key={`${selectedGuild.value}-members`} selectedGuild={selectedGuild.value}/>
         </div>
     );
