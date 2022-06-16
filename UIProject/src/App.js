@@ -56,7 +56,7 @@ function App(props) {
     }
     
     return (
-        <div className='App' style={{ width: window.innerWidth}}>
+        <div className='App'>
             {
                 isLoading ? 
                     <div className={classes.loadingSpinner}>

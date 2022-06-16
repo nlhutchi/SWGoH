@@ -75,7 +75,10 @@ function GuildPage(props) {
     return (
         <div>
             <GuildBanner 
-                guildIcon={props.guildMasterData && props.guildMasterData[selectedGuild.value].banner_logo_id} 
+                guildIcon={props.guildMasterData && props.guildMasterData[selectedGuild.value].banner_logo_id}
+                guildId={selectedGuild.value}
+                GP={props.guildMasterData && props.guildMasterData[selectedGuild.value].galactic_power}
+                members={props.guildMasterData && props.guildMasterData[selectedGuild.value].member_count}
             >
                 <Select 
                     options={guilds}
