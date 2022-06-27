@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
+import Character from '../components/Character';
 
 const useStyles = makeStyles({
     wrapper: {
@@ -30,7 +31,7 @@ function PlayerPage(props) {
                         .map((unit) => {
                             if(unit.data.combat_type !== 2)
                                 return <div className={`col-xs-3`}>
-                                    <img className={classes.characterImg} src={props.characterData[unit.data.base_id].image} alt={unit.data.base_id}/>
+                                    <Character unit={unit.data} />
                                     <div>{unit.data.power}</div>
                                 </div>
                         })
