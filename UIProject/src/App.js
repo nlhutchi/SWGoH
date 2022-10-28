@@ -26,12 +26,9 @@ function App(props) {
     const { token, setToken } = useToken();
     const [ isLoading, setIsLoading ] = useState(false);
     const [ isLoadingError, setIsLoadingError ] = useState(false);
-  
-    // if(!token) {
-    //   return <Login setToken={setToken} />
-    // }
 
     useEffect(() => {
+        setToken(null)
         setIsLoading(true);
     }, []);
 
@@ -55,22 +52,26 @@ function App(props) {
             });
     }
     
-    return (
-        <div className='App'>
-            {
-                isLoading ? 
-                    <div className={classes.loadingSpinner}>
-                        <ReactLoading height={'20%'} width={'20%'} type='spinningBubbles' color='#1976d2'/>
-                    </div> :
-                    <Router history={Router.browserHistory}>
-                        <Routes>
-                            <Route path="/" element={<GuildPage/>} />
-                            <Route path="/Player/:guildId/:allyCode/" element={<PlayerPage />} />
-                        </Routes>
-                    </Router>
-            }
-        </div>
-    );
+    if(!token) {
+        return <Login setToken={setToken} />
+    } else {
+        return (
+            <div className='App'>
+                {
+                    isLoading ? 
+                        <div className={classes.loadingSpinner}>
+                            <ReactLoading height={'20%'} width={'20%'} type='spinningBubbles' color='#1976d2'/>
+                        </div> :
+                        <Router history={Router.browserHistory}>
+                            <Routes>
+                                <Route path="/" element={<GuildPage/>} />
+                                <Route path="/Player/:guildId/:allyCode/" element={<PlayerPage />} />
+                            </Routes>
+                        </Router>
+                }
+            </div>
+        );
+    }
 }
 
 function mapStateToProps(state) {
