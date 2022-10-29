@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
-import Button from '@mui/material/Button';
 import Character from '../components/Character';
+import StarRating from '../components/StarRating';
 
 const useStyles = makeStyles({
     wrapper: {
@@ -30,8 +30,10 @@ function PlayerPage(props) {
                         .sort((a, b) => b.data.power - a.data.power)
                         .map((unit) => {
                             if(unit.data.combat_type !== 2)
-                                return <div className={`col-xs-3`}>
+                                return <div className={`col-xs-3`} key={unit.data.base_id}>
                                     <Character unit={unit.data} />
+                                    <StarRating stars={unit.data.rarity}/>
+                                    <div>{unit.data.name}</div>
                                     <div>{unit.data.power}</div>
                                 </div>
                         })

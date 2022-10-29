@@ -5,7 +5,8 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles({
     characterImg: {
         zIndex: 1,
-        borderRadius: 100
+        borderRadius: 100,
+        maxHeight: 128
     },
     characterWrapper: {
         display: 'block',
@@ -16,33 +17,23 @@ const useStyles = makeStyles({
         width: 50
     },
     g13FrameDark: {
-        position: 'absolute',
         backgroundImage: 'url(https://assets.swgoh.gg/files/assets/character-frame-relic-atlas.0b9ffa6122f58395.png)',
         zIndex: 2,
         backgroundSize: '100% 200%'
     },
     g13FrameLight: {
         backgroundImage: 'url(https://assets.swgoh.gg/files/assets/character-frame-relic-atlas.0b9ffa6122f58395.png)',
-        zIndex: '-1',
-        left: '50%',
-        top: '50%',
+        zIndex: 2,
+        backgroundPosition: '0 100%',
+        backgroundSize: '100% 200%'
     },
 });
 
 function Character(props) {
     const classes = useStyles();
-    const ref = useRef(null)
     const wrapperRef = useRef(null)
     const [ height, setHeight ] = useState(0);
-    const [ width, setWidth ] = useState(0);
     const [ wrapperWidth, setWrapperWidth ] = useState(false);
-
-    useEffect(() => {
-        if(ref.current && height !== ref.current.clientHeight) {
-            setHeight(ref.current.clientHeight);
-            setWidth(ref.current.clientWidth);
-        }
-    }, [ref]);
 
     useEffect(() => {
         if(wrapperRef.current && height !== wrapperRef.current.clientHeight) {
@@ -50,20 +41,22 @@ function Character(props) {
         }
     }, [wrapperRef]);
 
-    
     return (
         <div 
             ref={wrapperRef}
             className={`${classes.characterWrapper}`}
+            style={{ 
+                height: height
+            }}
         >
             <img
-                ref={ref}
+                onLoad={(e) => setHeight(e.target.height)}
                 className={`${classes.characterImg}`} 
                 src={props.characterData[props.unit.base_id].image} 
                 alt={props.unit.base_id}
             />
             <div 
-                className={`${classes.frameSize} ${classes.g13FrameDark}`} 
+                className={`${classes.frameSize} ${props.characterData[props.unit.base_id].alignment === "Light Side" ? classes.g13FrameLight : classes.g13FrameDark}`} 
                 style={{ 
                     height: height,
                     marginLeft: `${(wrapperWidth)/2}px`,
@@ -71,11 +64,11 @@ function Character(props) {
                 }}
             ></div>
             <div 
-                className={`${classes.frameSize} ${classes.right} ${classes.g13FrameDark}`} 
+                className={`${classes.frameSize} ${props.characterData[props.unit.base_id].alignment === "Light Side" ? classes.g13FrameLight : classes.g13FrameDark}`} 
                 style={{ 
                     height: height,
                     marginLeft: `${(wrapperWidth)/2}px`,
-                    transform: `rotateY(180deg) translate(-50%,-103%)`
+                    transform: `rotateY(180deg) translate(-50%,-203%)`
                 }}
             ></div>
         </div>
