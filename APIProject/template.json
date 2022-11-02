@@ -171,6 +171,16 @@
                                 "Ref": "ApiGateway"
                             }
                         }
+                    },
+                    "GLReqsData": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/MasterData/GLReqs",
+                            "Method": "get",
+                            "RestApiId": {
+                                "Ref": "ApiGateway"
+                            }
+                        }
                     }
                 }
             }

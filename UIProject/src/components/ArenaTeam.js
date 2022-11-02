@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { makeStyles } from '@mui/styles';
+// import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles({
+// const useStyles = makeStyles({
     
-});
+// });
 
 function ArenaTeam(props) {
-    const classes = useStyles();
+    //const classes = useStyles();
 
     return (
         <div>

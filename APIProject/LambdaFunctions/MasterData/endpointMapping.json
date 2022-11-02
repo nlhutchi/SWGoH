@@ -4,6 +4,11 @@
             "eventName": "Get Character MasterData",
             "path": "/MasterData/Characters/",
             "description": "Gets character masterData from swgoh gg"
+        },
+        "GLRequirementData": {
+            "eventName": "Get GL Requirements",
+            "path": "/MasterData/GLReqs/",
+            "description": "Gets GL Requirement masterData from swgoh gg"
         }
     }
 }

@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
-import Button from '@mui/material/Button';
+import { Tabs, Tab } from '@mui/material';
+import Character from '../components/Character';
+import StarRating from '../components/StarRating';
 
 const useStyles = makeStyles({
     wrapper: {
@@ -14,28 +16,64 @@ const useStyles = makeStyles({
     }
 });
 
+function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
 function PlayerPage(props) {
     const classes = useStyles();
     const { allyCode, guildId } = useParams();
+    const [ tabIndex, setTabIndex ] = useState(0);
+    const memberData = props.memberData[guildId][allyCode];
+
+    const handleTabChange = (event, newValue) => {
+        setTabIndex(newValue);
+    };
 
     return (
         <>
             <div>
-                {props.memberData[guildId][allyCode].data.name}
+                {memberData.data.name}
             </div>
-            <div className={`${classes.wrapper}`}>
-                {
-                    props.memberData[guildId][allyCode].units
-                        .sort((a, b) => b.data.power - a.data.power)
-                        .map((unit) => {
-                            if(unit.data.combat_type !== 2)
-                                return <div className={`col-xs-3`}>
-                                    <img className={classes.characterImg} src={props.characterData[unit.data.base_id].image} alt={unit.data.base_id}/>
-                                    <div>{unit.data.power}</div>
-                                </div>
-                        })
-                }
-            </div>
+            <Tabs value={tabIndex} onChange={handleTabChange} aria-label="Player Tabs">
+                <Tab label="Characters" {...a11yProps(0)} />
+                <Tab label="Ships" {...a11yProps(1)} />
+                <Tab label="Journey Guide" {...a11yProps(2)} />
+            </Tabs>
+            { tabIndex === 0 && 
+                <div
+                    className={`${classes.wrapper}`}
+                >
+                    {
+                        memberData.units
+                            .sort((a, b) => b.data.power - a.data.power)
+                            .map((unit) => {
+                                if(unit.data.combat_type !== 2)
+                                    return <div className={`col-xs-3`} key={unit.data.base_id}>
+                                        <Character unit={unit.data} />
+                                        <StarRating stars={unit.data.rarity}/>
+                                        <div>{unit.data.name}</div>
+                                        <div>{unit.data.power}</div>
+                                    </div>
+                            })
+                    }
+                </div>
+            }
+            { tabIndex === 1 && 
+                <div
+                    className={`${classes.wrapper}`}
+                > Ships Tab</div>
+            }
+            { tabIndex === 2 && 
+                <div
+                    className={`${classes.wrapper}`}
+                >
+                    Journey Guide Progress
+                </div>
+            }
         </>
     );
 }

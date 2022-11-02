@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import { useNavigate } from "react-router-dom";
@@ -32,17 +32,29 @@ function MemberCard(props) {
     const classes = useStyles();
     const navigate = useNavigate();
 
+    const onCardClick = () => {
+        if(props.memberData[props.guildId]) {
+            if(props.memberData[props.guildId][props.allyCode]) {
+                navigate(`/Player/${props.guildId}/${props.allyCode}/`);
+            } else {
+                console.error("Member Data Could Not Load");
+            }
+        } else {
+            console.error("Guild Data Hasn't Loaded Yet");
+        }
+    }
+
     return (
         <div className={`col-xs-4 ${classes.wrapper}`}>
             <Button 
                 variant="outlined"
                 className={`${classes.button}`}
-                onClick={() => navigate(`/Player/${props.guildId}/${props.allyCode}/`)}
+                onClick={onCardClick}
             >
                 <div>
                     <div>
-                        <img className={classes.userImg} src={props.userFrame} />
-                        <img className={classes.UserImg} src={props.userImg} />
+                        <img className={classes.userImg} src={props.userFrame} alt='User Frame' />
+                        <img className={classes.UserImg} src={props.userImg} alt='User' />
                     </div>
                     <div className={classes.title}>{props.memberName}</div>
                 </div>
@@ -67,6 +79,7 @@ function MemberCard(props) {
 
 function mapStateToProps(state) {
     return {
+        memberData: state.MemberDataReducer.memberData
     };
 }
 

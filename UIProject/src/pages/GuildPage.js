@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { makeStyles } from '@mui/styles';
+// import { makeStyles } from '@mui/styles';
 import Select from 'react-select';
-import useToken from '../components/useToken';
+// import useToken from '../components/useToken';
 import APIEndPoints from '../services/api';
 import GuildMembers from '../components/GuildMembers';
 import GuildBanner from '../components/GuildBanner';
@@ -25,16 +25,16 @@ const guilds = [
     }
 ];
 
-const useStyles = makeStyles({
-    guildTitle: {
+// const useStyles = makeStyles({
+//     guildTitle: {
 
-    }
-});
+//     }
+// });
 
 function GuildPage(props) {
-    const { token, setToken } = useToken();
+    // const { token, setToken } = useToken();
     const [ selectedGuild, setSelectedGuild] = useState(guilds[0]);
-    const classes = useStyles();
+    // const classes = useStyles();
     var { guildMasterData } = props;
 
     useEffect(async () => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ReactLoading from "react-loading";
 import GuildPage from './pages/GuildPage';
 import Login from './pages/Login';
@@ -26,12 +26,9 @@ function App(props) {
     const { token, setToken } = useToken();
     const [ isLoading, setIsLoading ] = useState(false);
     const [ isLoadingError, setIsLoadingError ] = useState(false);
-  
-    // if(!token) {
-    //   return <Login setToken={setToken} />
-    // }
 
     useEffect(() => {
+        setToken(null)
         setIsLoading(true);
     }, []);
 
@@ -51,26 +48,31 @@ function App(props) {
                 setIsLoading(false);
             })
             .catch((err) => {
+                console.error(!isLoadingError)
                 setIsLoadingError(true);
             });
     }
     
-    return (
-        <div className='App'>
-            {
-                isLoading ? 
-                    <div className={classes.loadingSpinner}>
-                        <ReactLoading height={'20%'} width={'20%'} type='spinningBubbles' color='#1976d2'/>
-                    </div> :
-                    <Router history={Router.browserHistory}>
-                        <Routes>
-                            <Route path="/" element={<GuildPage/>} />
-                            <Route path="/Player/:guildId/:allyCode/" element={<PlayerPage />} />
-                        </Routes>
-                    </Router>
-            }
-        </div>
-    );
+    if(!token) {
+        return <Login setToken={setToken} />
+    } else {
+        return (
+            <div className='App'>
+                {
+                    isLoading ? 
+                        <div className={classes.loadingSpinner}>
+                            <ReactLoading height={'20%'} width={'20%'} type='spinningBubbles' color='#1976d2'/>
+                        </div> :
+                        <Router history={Router.browserHistory}>
+                            <Routes>
+                                <Route path="/" element={<GuildPage/>} />
+                                <Route path="/Player/:guildId/:allyCode/" element={<PlayerPage />} />
+                            </Routes>
+                        </Router>
+                }
+            </div>
+        );
+    }
 }
 
 function mapStateToProps(state) {
