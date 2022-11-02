@@ -22,6 +22,10 @@ exports.handler = async (event, context, callback) => {
                         console.log("Endpoint: ", endpointMapping.GET.CharacterData.description);
                         await getCharacterDataGG();
                         return callback(null, returnObj);
+                    case endpointMapping.GET.GLRequirementData.path:
+                        console.log("Endpoint: ", endpointMapping.GET.GLRequirementData.description);
+                        await getGLChecklist();
+                        return callback(null, returnObj);
                     default:
                         returnObj.body = "Path not found";
                         returnObj.statusCode = 404;
@@ -47,6 +51,21 @@ async function getCharacterDataGG() {
         .then((data) => {
             console.log("Success", data);
             returnObj.body = JSON.stringify({ ...data.data });
+            returnObj.statusCode = 200;
+        })
+        .catch((err) => {
+            console.log("Error", err);
+            returnObj.body = JSON.stringify({ message: 'failed', details: err });
+            returnObj.statusCode = 400;
+        });
+}
+
+async function getGLChecklist() {
+    console.log('getGuildDataGG')
+    await axiosInstance.get(`http://api.swgoh.gg/gl-checklist/`)
+        .then((response) => {
+            console.log("Success", response);
+            returnObj.body = JSON.stringify({ ...response.data });
             returnObj.statusCode = 200;
         })
         .catch((err) => {

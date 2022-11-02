@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ReactLoading from "react-loading";
 import GuildPage from './pages/GuildPage';
 import Login from './pages/Login';
@@ -48,6 +48,7 @@ function App(props) {
                 setIsLoading(false);
             })
             .catch((err) => {
+                console.error(!isLoadingError)
                 setIsLoadingError(true);
             });
     }
