@@ -10,7 +10,12 @@ const memberReducer = (state = initialState, action) => {
             var memberObj = {};
             action.payload.memberDataArray.forEach((memberData) => {
                 if(memberData) {
+                    let unitMapping = {};
+                    memberData.units.forEach((unit) => {
+                        unitMapping[unit.data.base_id] = unit.data
+                    });
                     memberObj[memberData.data.ally_code] = memberData;
+                    memberObj[memberData.data.ally_code].unitMapping = unitMapping;
                 }
             });
             return Object.assign({}, state, {

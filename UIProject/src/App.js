@@ -10,7 +10,7 @@ import { makeStyles } from '@mui/styles';
 import './App.css';
 import axios from 'axios';
 import APIEndPoints from './services/api';
-import { setCharacterMasterData } from './actions/MasterDataActions';
+import { setCharacterMasterData, setGLMasterData } from './actions/MasterDataActions';
 
 const useStyles = makeStyles({
     loadingSpinner: {
@@ -26,6 +26,16 @@ function App(props) {
     const { token, setToken } = useToken();
     const [ isLoading, setIsLoading ] = useState(false);
     const [ isLoadingError, setIsLoadingError ] = useState(false);
+    const masterDataCalls = [
+        {
+            endpoint:APIEndPoints.CHARACTER_DATA,
+            callBack: props.setCharacterMasterData
+        },
+        {
+            endpoint: APIEndPoints.GL_REQ_DATA,
+            callBack: props.setGLMasterData
+        }
+    ];
 
     useEffect(() => {
         setToken(null)
@@ -39,17 +49,26 @@ function App(props) {
     }, [isLoading]);
 
     const loadMasterData = async () => {
-        axios({
-            method: 'get',
-            url: APIEndPoints.CHARACTER_DATA
+        var promiseArray = [];
+        masterDataCalls.forEach((call) => {
+            promiseArray.push(
+                axios({
+                    method: 'get',
+                    url: call.endpoint
+                })
+                    .then((response) => {
+                        console.log('response', response)
+                        call.callBack(response.data);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        setIsLoadingError(true);
+                    })
+            );
         })
-            .then((response) => {
-                props.setCharacterMasterData(response.data);
+        await Promise.all(promiseArray)
+            .then(() => {
                 setIsLoading(false);
-            })
-            .catch((err) => {
-                console.error(!isLoadingError)
-                setIsLoadingError(true);
             });
     }
     
@@ -81,7 +100,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    setCharacterMasterData: (characterData) => dispatch(setCharacterMasterData(characterData))
+    setCharacterMasterData: (characterData) => dispatch(setCharacterMasterData(characterData)),
+    setGLMasterData: (glData) => dispatch(setGLMasterData(glData))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

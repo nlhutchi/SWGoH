@@ -5,6 +5,7 @@ import { makeStyles } from '@mui/styles';
 import { Tabs, Tab } from '@mui/material';
 import Character from '../components/Character';
 import StarRating from '../components/StarRating';
+import JourneyGuide from '../components/JourneyGuide';
 
 const useStyles = makeStyles({
     wrapper: {
@@ -71,7 +72,7 @@ function PlayerPage(props) {
                 <div
                     className={`${classes.wrapper}`}
                 >
-                    Journey Guide Progress
+                    <JourneyGuide allyCode guildId />
                 </div>
             }
         </>

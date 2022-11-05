@@ -66,7 +66,7 @@ function GuildBanner(props) {
                 <Button
                     variant="outlined"
                     className={classes.button}
-                    onCLick={() => navigate(`/PlanTB/${props.guildId}/`)}
+                    onClick={() => navigate(`/PlanTB/${props.guildId}/`)}
                 >
                     Plan TB
                 </Button>

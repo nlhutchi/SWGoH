@@ -1,26 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { setCharacterMasterData } from '../actions/MasterDataActions'
+import { setCharacterMasterData, setGLMasterData } from '../actions/MasterDataActions'
 import axios from 'axios';
 import APIEndPoints from '../services/api';
 
 function InitializeData(props) {
     const navigate = useNavigate();
+    const masterDataCalls = [
+        {
+            endpoint:APIEndPoints.CHARACTER_DATA,
+            callBack: props.setCharacterMasterData
+        },
+        {
+            endpoint: APIEndPoints.GL_REQ_DATA,
+            callBack: props.setGLMasterData
+        }
+    ];
 
     useEffect(async () => {
-        await getCharacterData();
+        await getAllData();
         navigate('/Guild')
     }, []);
 
-    const getCharacterData = async () => {
-        await axios({
-            method: 'get',
-            url: APIEndPoints.CHARACTER_DATA
+    const getAllData = async () => {
+        var promiseArray = [];
+        masterDataCalls.forEach((call) => {
+            debugger
+            promiseArray.push(
+                axios({
+                    method: 'get',
+                    url: call.endpoint
+                })
+                    .then((response) => {
+                        console.log(call.endpoint);
+                        call.callBack(response.data);
+                    })
+                    .catch((error) => {
+                        console.log(call.endpoint);
+                        console.log('MDError', error)
+                    })
+            );
         })
-            .then((response) => {
-                props.setCharacterMasterData(response.data);
-            });
+        await Promise.all(promiseArray);
     }
 
     return (

@@ -1,7 +1,8 @@
-import { SET_CHARACTER_MASTER_DATA } from '../actions/MasterDataActions';
+import { SET_CHARACTER_MASTER_DATA, SET_GL_MASTER_DATA } from '../actions/MasterDataActions';
 
 const initialState = {
-    characterData: {}
+    characterData: {},
+    glRequirements: {}
 };
 
 const masterDataReducer = (state = initialState, action) => {
@@ -14,6 +15,10 @@ const masterDataReducer = (state = initialState, action) => {
 
             return Object.assign({}, state, {
                 characterData
+            });
+        case SET_GL_MASTER_DATA:
+            return Object.assign({}, state, {
+                glRequirements: action.payload.units
             });
         default:
             return state;

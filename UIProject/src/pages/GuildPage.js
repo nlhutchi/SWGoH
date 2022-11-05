@@ -53,18 +53,20 @@ function GuildPage(props) {
         if(guildMasterData && !props.memberData[selectedGuild.value]) {
             var promiseArray = [];
             guildMasterData[selectedGuild.value].members.forEach(member => {
-                promiseArray.push(
-                    axios({
-                        method: 'get',
-                        url: APIEndPoints.MEMBER_DATA(member.ally_code)
-                    })
-                        .then((response) => {
-                            return response.data;
+                if(member.ally_code) {
+                    promiseArray.push(
+                        axios({
+                            method: 'get',
+                            url: APIEndPoints.MEMBER_DATA(member.ally_code)
                         })
-                        .catch((err) => {
-                            console.log('Failed for member:', member)
-                        })
-                );
+                            .then((response) => {
+                                return response.data;
+                            })
+                            .catch((err) => {
+                                console.log('Failed for member:', member)
+                            })
+                    );
+                }
             });
             Promise.all(promiseArray).then((responses) => {
                 props.setMemberData(selectedGuild.value, responses);
