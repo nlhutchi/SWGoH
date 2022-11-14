@@ -14,13 +14,13 @@ const useStyles = makeStyles({
     },
     glWrapper: {
         flex: 1,
-        flexDirection: 'row',
         border: 'solid',
         margin: 20
     },
     reqsWrapper: {
         flex: 1,
-        flexDirection: 'column',
+        display: 'flex',
+        flexWrap: 'wrap'
     }
 });
 
@@ -40,14 +40,22 @@ function JourneyGuide(props) {
                 glRequirements.map((gl) => {
                     return <div className={classes.glWrapper}>
                         <div>{gl.unitName}</div>
-                        <div className={`${classes.reqsWrapper} col-xs-3`}>
+                        <div className={`${classes.reqsWrapper}`}>
                             {
                                 gl.requiredUnits.map((unit) => {
-                                    let unitData = unitMapping[unit.baseId]
-                                    return <>
-                                        <Character unit={unitData} />
-                                        <StarRating stars={unitData.rarity}/>
-                                    </>
+                                    let unitData = unitMapping[unit.baseId];
+                                    if(unitData) {
+                                        return <div className='col-xs-3'>
+                                            <Character unit={unitData} />
+                                            <StarRating stars={unitData.rarity}/>
+                                        </div>
+                                    } else {
+                                        unitData = characterData[unit.baseId];
+                                        return <div className='col-xs-3'>
+                                            <Character unit={unitData} />
+                                            <StarRating stars={0}/>
+                                        </div>
+                                    }
                                 })
                             }
                         </div>
