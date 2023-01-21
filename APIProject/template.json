@@ -228,10 +228,10 @@
                 ],
                 "GlobalSecondaryIndexes": [
                     {
-                        "IndexName": "bucketName",
+                        "IndexName": "swgohPlatoonName",
                         "KeySchema": [
                             {
-                                "AttributeName": "bucketName",
+                                "AttributeName": "swgohPlatoonName",
                                 "KeyType": "HASH"
                             }
                         ],
