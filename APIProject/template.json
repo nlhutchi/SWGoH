@@ -204,6 +204,51 @@
             "Metadata": {
                 "BuildMethod": "nodejs14.x"
             }
+        },
+        "SWGoHPlatoons": {
+            "Type": "AWS::DynamoDB::Table",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+                "TableName":"swgoh-platoons",
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "swgohPlatoonId",
+                        "AttributeType": "S"
+                    },
+                    {
+                        "AttributeName": "swgohPlatoonName",
+                        "AttributeType": "S"
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "swgohPlatoonId",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "GlobalSecondaryIndexes": [
+                    {
+                        "IndexName": "bucketName",
+                        "KeySchema": [
+                            {
+                                "AttributeName": "bucketName",
+                                "KeyType": "HASH"
+                            }
+                        ],
+                        "Projection": {
+                            "ProjectionType": "ALL"
+                        },
+                        "ProvisionedThroughput": {
+                            "ReadCapacityUnits": 5,
+                            "WriteCapacityUnits": 5
+                        }
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": 5,
+                    "WriteCapacityUnits": 5
+                }
+            }
         }
     }
 }
