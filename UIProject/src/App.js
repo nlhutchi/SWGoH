@@ -5,6 +5,7 @@ import ReactLoading from "react-loading";
 import GuildPage from './pages/GuildPage';
 import Login from './pages/Login';
 import PlayerPage from './pages/PlayerPage';
+import PlanTW from './pages/PlanTW';
 import useToken from './components/useToken';
 import { makeStyles } from '@mui/styles';
 import './App.css';
@@ -86,6 +87,7 @@ function App(props) {
                             <Routes>
                                 <Route path="/" element={<GuildPage/>} />
                                 <Route path="/Player/:guildId/:allyCode/" element={<PlayerPage />} />
+                                <Route path="/PlanTW/:guildId/" element={<PlanTW />} />
                             </Routes>
                         </Router>
                 }

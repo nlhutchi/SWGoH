@@ -46,13 +46,13 @@ function GuildBanner(props) {
             </div>
             <div className={`${classes.columns} ${classes.guildData}`}>
                 <div className={classes.dataRow}>
+                    {props.children}
+                </div>
+                <div className={classes.dataRow}>
                     Guild GP: {props.GP && (props.GP).toLocaleString("en-US")}
                 </div>
                 <div className={classes.dataRow}>
                     Members: {props.members}
-                </div>
-                <div className={classes.dataRow}>
-                    {props.children}
                 </div>
             </div>
             <div className={`${classes.columns} ${classes.actionRows}`}>
