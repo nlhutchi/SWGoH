@@ -142,6 +142,38 @@
                 }
             }
         },
+        "UpdateGuildMembers": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "FunctionName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            { "Ref": "AppName" },
+                            "GuildMembers"
+                        ]
+                    ]
+                },
+                "CodeUri": "./LambdaFunctions/GuildMembers",
+                "Timeout": 30,
+                "Environment": {
+                    "Variables": {
+                        "GuildId": "5kekVkXxRf6VgXEUvN16yA",
+                        "GuildMemberTable": {
+                            "Ref": "SWGoHGuildMembers"
+                        }
+                    }
+                },
+                "Events": {
+                    "UpdateGuildMembers": {
+                        "Type": "ScheduleV2",
+                        "Properties": {
+                            "ScheduleExpression": "rate(1 day)"
+                        }
+                    }
+                }
+            }
+        },
         "MasterData": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
