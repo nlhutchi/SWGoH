@@ -11,6 +11,7 @@ import './App.css';
 import axios from 'axios';
 import APIEndPoints from './services/api';
 import { setCharacterMasterData } from './actions/MasterDataActions';
+import RaidScores from './pages/RaidScores';
 
 const useStyles = makeStyles({
     loadingSpinner: {
@@ -27,52 +28,53 @@ function App(props) {
     const [ isLoading, setIsLoading ] = useState(false);
     const [ isLoadingError, setIsLoadingError ] = useState(false);
 
-    useEffect(() => {
-        setToken(null)
-        setIsLoading(true);
-    }, []);
+    // useEffect(() => {
+    //     setToken(null)
+    //     setIsLoading(true);
+    // }, []);
 
-    useEffect(() => {
-        if(isLoading) {
-            loadMasterData();
-        };
-    }, [isLoading]);
+    // useEffect(() => {
+    //     if(isLoading) {
+    //         loadMasterData();
+    //     };
+    // }, [isLoading]);
 
-    const loadMasterData = async () => {
-        axios({
-            method: 'get',
-            url: APIEndPoints.CHARACTER_DATA
-        })
-            .then((response) => {
-                props.setCharacterMasterData(response.data);
-                setIsLoading(false);
-            })
-            .catch((err) => {
-                console.error(!isLoadingError)
-                setIsLoadingError(true);
-            });
-    }
+    // const loadMasterData = async () => {
+    //     axios({
+    //         method: 'get',
+    //         url: APIEndPoints.CHARACTER_DATA
+    //     })
+    //         .then((response) => {
+    //             props.setCharacterMasterData(response.data);
+    //             setIsLoading(false);
+    //         })
+    //         .catch((err) => {
+    //             console.error(!isLoadingError)
+    //             setIsLoadingError(true);
+    //         });
+    // }
     
-    if(!token) {
-        return <Login setToken={setToken} />
-    } else {
+    // if(!token) {
+    //     return <Login setToken={setToken} />
+    // } else {
         return (
             <div className='App'>
                 {
-                    isLoading ? 
-                        <div className={classes.loadingSpinner}>
-                            <ReactLoading height={'20%'} width={'20%'} type='spinningBubbles' color='#1976d2'/>
-                        </div> :
+                    // isLoading ? 
+                    //     <div className={classes.loadingSpinner}>
+                    //         <ReactLoading height={'20%'} width={'20%'} type='spinningBubbles' color='#1976d2'/>
+                    //     </div> :
                         <Router history={Router.browserHistory}>
                             <Routes>
-                                <Route path="/" element={<GuildPage/>} />
-                                <Route path="/Player/:guildId/:allyCode/" element={<PlayerPage />} />
+                                <Route path="/" element={<RaidScores/>} />
+                                {/* <Route path="/" element={<GuildPage/>} />
+                                <Route path="/Player/:guildId/:allyCode/" element={<PlayerPage />} /> */}
                             </Routes>
                         </Router>
                 }
             </div>
         );
-    }
+    // }
 }
 
 function mapStateToProps(state) {

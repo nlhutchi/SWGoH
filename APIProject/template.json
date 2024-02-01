@@ -249,6 +249,29 @@
                     "WriteCapacityUnits": 5
                 }
             }
+        },
+        "SWGoHGuildMembers": {
+            "Type": "AWS::DynamoDB::Table",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+                "TableName":"swgoh-guild-members",
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "allyCode",
+                        "AttributeType": "S"
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "allyCode",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": 5,
+                    "WriteCapacityUnits": 5
+                }
+            }
         }
     }
 }
