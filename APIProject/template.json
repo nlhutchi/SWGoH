@@ -109,31 +109,11 @@
                     }
                 ],
                 "Events": {
-                    "GetGuildData": {
-                        "Type": "Api",
-                        "Properties": {
-                            "Path": "/GuildData/{proxy+}",
-                            "Method": "get",
-                            "RestApiId": {
-                                "Ref": "ApiGateway"
-                            }
-                        }
-                    },
-                    "MemberData": {
-                        "Type": "Api",
-                        "Properties": {
-                            "Path": "/MemberData/{proxy+}",
-                            "Method": "get",
-                            "RestApiId": {
-                                "Ref": "ApiGateway"
-                            }
-                        }
-                    },
                     "GuildData": {
                         "Type": "Api",
                         "Properties": {
                             "Path": "/GuildData/",
-                            "Method": "post",
+                            "Method": "get",
                             "RestApiId": {
                                 "Ref": "ApiGateway"
                             }

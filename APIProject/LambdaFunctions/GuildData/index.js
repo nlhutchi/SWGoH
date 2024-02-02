@@ -1,7 +1,7 @@
 const AWS = require("aws-sdk");
-const axios = require('axios');
 const endpointMapping = require("./endpointMapping.json");
-var axiosInstance;
+
+var documentClient = new AWS.DynamoDB.DocumentClient();
 
 var returnObj = {
     statusCode: null,
@@ -16,7 +16,6 @@ exports.handler = async (event, context, callback) => {
     if(!axiosInstance) {
         axiosInstance = createAxiosInstance();
     }
-    var body = event.body;
 
     try {
         switch (event.httpMethod) {
@@ -24,22 +23,7 @@ exports.handler = async (event, context, callback) => {
                 switch (event.resource) {
                     case endpointMapping.GET.GuildData.path:
                         console.log("Endpoint: ", endpointMapping.GET.GuildData.description);
-                        await getGuildDataGG(event.path.split("/")[2]);
-                        return callback(null, returnObj);
-                    case endpointMapping.GET.MemberData.path:
-                        console.log("Endpoint: ", endpointMapping.GET.MemberData.description);
-                        await getMemberDataGG(event.path.split("/")[2]);
-                        return callback(null, returnObj);
-                    default:
-                        returnObj.body = "Path not found";
-                        returnObj.statusCode = 404;
-                        return callback(null, returnObj);
-                }
-            case "POST": 
-                switch (event.path) {
-                    case endpointMapping.POST.GuildData.path:
-                        console.log("Endpoint: ", endpointMapping.POST.GuildData.description);
-                        await getGuildDataGG(body.guildId);
+                        await getGuildData();
                         return callback(null, returnObj);
                     default:
                         returnObj.body = "Path not found";
@@ -60,11 +44,11 @@ exports.handler = async (event, context, callback) => {
     }
 };
 
-async function getGuildData(body) {
-    await axiosInstance.post('https://api.swgoh.help/swgoh/guilds', { allycodes: body.allyCodes })
-        .then((data) => {
-            console.log("Success", data);
-            returnObj.body = JSON.stringify({ ...data.data });
+async function getGuildData() {
+    await documentClient.scan().promise()
+        .then((response) => {
+            console.log("Success", response);
+            returnObj.body = JSON.stringify({ guildMembers: response });
             returnObj.statusCode = 200;
         })
         .catch((err) => {
@@ -72,45 +56,15 @@ async function getGuildData(body) {
             returnObj.body = JSON.stringify({ message: 'failed', details: err });
             returnObj.statusCode = 400;
         })
-}
-
-async function getMemberDataGG(allyCode) {
-    console.log('getMemberDataGG')
-    await axiosInstance.get(`http://api.swgoh.gg/player/${allyCode}/`)
-        .then((data) => {
-            console.log("Success", data);
-            returnObj.body = JSON.stringify({ ...data.data });
-            returnObj.statusCode = 200;
-        })
-        .catch((err) => {
-            console.log("Error", err);
-            returnObj.body = JSON.stringify({ message: 'failed', details: err });
-            returnObj.statusCode = 400;
-        });
-}
-
-async function getGuildDataGG(guildId) {
-    console.log('getGuildDataGG')
-    await axiosInstance.get(`http://api.swgoh.gg/guild-profile/${guildId}/`)
-        .then((data) => {
-            console.log("Success", data);
-            returnObj.body = JSON.stringify({ ...data.data });
-            returnObj.statusCode = 200;
-        })
-        .catch((err) => {
-            console.log("Error", err);
-            returnObj.body = JSON.stringify({ message: 'failed', details: err });
-            returnObj.statusCode = 400;
-        });
-}
-
-
-function createAxiosInstance() {
-    return axios.create({
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
-        },
-    });
+    // await axiosInstance.get(`http://api.swgoh.gg/guild-profile/${guildId}/`)
+    //     .then((data) => {
+    //         console.log("Success", data);
+    //         returnObj.body = JSON.stringify({ ...data.data });
+    //         returnObj.statusCode = 200;
+    //     })
+    //     .catch((err) => {
+    //         console.log("Error", err);
+    //         returnObj.body = JSON.stringify({ message: 'failed', details: err });
+    //         returnObj.statusCode = 400;
+    //     });
 }
