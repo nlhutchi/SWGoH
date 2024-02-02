@@ -108,6 +108,13 @@
                         "Ref": "AssetLayer"
                     }
                 ],
+                "Environment": {
+                    "Variables": {
+                        "GuildMemberTable": {
+                            "Ref": "SWGoHGuildMembers"
+                        }
+                    }
+                },
                 "Policies": [
                     {
                         "Version": "2012-10-17",

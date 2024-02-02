@@ -42,7 +42,11 @@ exports.handler = async (event, context, callback) => {
 };
 
 async function getGuildData() {
-    await documentClient.scan().promise()
+    var params = {
+        TableName: process.env.GuildMemberTable,
+    };
+
+    await documentClient.scan(params).promise()
         .then((response) => {
             console.log("Success", response);
             returnObj.body = JSON.stringify({ guildMembers: response });
