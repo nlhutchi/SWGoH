@@ -21,7 +21,7 @@ exports.handler = async (event, context, callback) => {
 
     var guildInfo = await getGuildMembers(process.env.GuildId);
     console.log('guildInfo', guildInfo)
-    await insertMembersToDB(process.env.GuildMemberTable, guildInfo.members, guildInfo.guildId);
+    await insertMembersToDB(process.env.GuildMemberTable, guildInfo.members, guildInfo.guild_id);
 
     return callback(null, guildInfo);
                 
@@ -61,10 +61,22 @@ const insertMembersToDB = async (guildMemberTable, guildMembers, guildId) => {
     })
 
     console.log("tableArray", JSON.stringify(tableArray));
+    
+    if(tableArray.length > 25) {
+        await uploadToTable(guildMemberTable, tableArray.slice(0, 24))
+        await uploadToTable(guildMemberTable, tableArray.slice(24, tableArray.length))
+        
+    } else {
+        await uploadToTable(guildMemberTable, tableArray)
+    }
 
+    
+}
+
+const uploadToTable = async (guildMemberTable, items) => {
     var params = {
         RequestItems: {
-          [guildMemberTable]: tableArray
+          [guildMemberTable]: items
         }
       };
       
