@@ -32,7 +32,14 @@ function RaidScores(props) {
     const [ raidScores, setRaidScores] = useState(rows);
 
     useEffect(async () => {
-
+        await axios({
+            method: 'get',
+            url: APIEndPoints.GUILD_DATA
+        })
+            .then((response) => {
+                console.log(response)
+                setRaidScores(response.data.guildMembers);
+            });
     }, []);
   
     return (

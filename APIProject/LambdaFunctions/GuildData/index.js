@@ -13,9 +13,6 @@ var returnObj = {
 
 exports.handler = async (event, context, callback) => {
     console.log('Event', event);
-    if(!axiosInstance) {
-        axiosInstance = createAxiosInstance();
-    }
 
     try {
         switch (event.httpMethod) {
