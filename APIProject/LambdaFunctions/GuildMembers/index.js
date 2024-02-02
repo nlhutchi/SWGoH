@@ -19,11 +19,11 @@ exports.handler = async (event, context, callback) => {
         axiosInstance = createAxiosInstance();
     }
 
-    var guildMembers = await getGuildMembers();
-    console.log('guildMembers', guildMembers)
-    //await insertMembersToDB(process.env.GuildMemberTable, guildMembers);
+    var guildInfo = await getGuildMembers(process.env.GuildId);
+    console.log('guildInfo', guildInfo)
+    await insertMembersToDB(process.env.GuildMemberTable, guildInfo.members, guildInfo.guildId);
 
-    return callback(null, returnObj);
+    return callback(null, guildInfo);
                 
 }
 
@@ -32,9 +32,9 @@ async function getGuildMembers(guildId) {
     var guildMembers;
 
     await axiosInstance.get(`http://api.swgoh.gg/guild-profile/${guildId}/`)
-        .then((data) => {
-            console.log("Success", data);
-            guildMembers = data.data;
+        .then((response) => {
+            console.log("Success", response);
+            guildMembers = response.data.data;
         })
         .catch((err) => {
             console.log("Error", err);
@@ -44,21 +44,23 @@ async function getGuildMembers(guildId) {
 }
 
 
-const insertMembersToDB = async (guildMemberTable, guildMembers) => {
+const insertMembersToDB = async (guildMemberTable, guildMembers, guildId) => {
     console.log('guildMembers', guildMembers)
     var tableArray = guildMembers.map((member) => {
         return {
             PutRequest: {
               Item: {
-                allyCode: member.allyCode,
-                name: member.name,
-                gp: member.GP
+                allyCode: member.ally_code,
+                name: member.player_name,
+                gp: member.galactic_power,
+                guildId: guildId,
+                image: member.portrait_image
               }
             }
           }
     })
 
-    console.log("tableArray", tableArray);
+    console.log("tableArray", JSON.stringify(tableArray));
 
     var params = {
         RequestItems: {

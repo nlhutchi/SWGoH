@@ -158,7 +158,10 @@
                 "Timeout": 30,
                 "Environment": {
                     "Variables": {
-                        "GuildId": "5kekVkXxRf6VgXEUvN16yA"
+                        "GuildId": "5kekVkXxRf6VgXEUvN16yA",
+                        "GuildMemberTable": {
+                            "Ref": "SWGoHGuildMembers"
+                        }
                     }
                 },
                 "Events": {
@@ -279,5 +282,27 @@
                 }
             }
         },
+        "SWGoHGuildMembers": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "TableName":"swgoh-guild-members",
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "allyCode",
+                        "AttributeType": "N"
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "allyCode",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": 5,
+                    "WriteCapacityUnits": 5
+                }
+            }
+        }
     }
 }
