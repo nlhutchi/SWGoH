@@ -284,7 +284,6 @@
         },
         "SWGoHGuildMembers": {
             "Type": "AWS::DynamoDB::Table",
-            "DeletionPolicy": "Retain",
             "Properties": {
                 "TableName":"swgoh-guild-members",
                 "AttributeDefinitions": [
