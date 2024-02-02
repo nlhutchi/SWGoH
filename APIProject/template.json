@@ -164,6 +164,21 @@
                         }
                     }
                 },
+                "Policies": [
+                    {
+                        "Version": "2012-10-17",
+                        "Statement": [
+                            {
+                                "Sid": "DynamoDBPermissions",
+                                "Effect": "Allow",
+                                "Action": [
+                                    "dynamodb:*"
+                                ],
+                                "Resource": { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] }
+                            }
+                        ]
+                    }
+                ],
                 "Events": {
                     "UpdateGuildMembers": {
                         "Type": "ScheduleV2",
