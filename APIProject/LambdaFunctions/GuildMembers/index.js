@@ -1,6 +1,7 @@
+const AWS = require("aws-sdk");
 const axios = require('axios');
-var documentClient = new AWS.DynamoDB.DocumentClient();
 
+var documentClient = new AWS.DynamoDB.DocumentClient();
 var axiosInstance;
 
 const createAxiosInstance = () => {
