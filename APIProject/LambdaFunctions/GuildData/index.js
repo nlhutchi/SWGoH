@@ -49,7 +49,7 @@ async function getGuildData() {
     await documentClient.scan(params).promise()
         .then((response) => {
             console.log("Success", response);
-            returnObj.body = JSON.stringify({ guildMembers: response });
+            returnObj.body = JSON.stringify({ guildMembers: response.Items });
             returnObj.statusCode = 200;
         })
         .catch((err) => {

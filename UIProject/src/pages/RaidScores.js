@@ -38,6 +38,7 @@ function RaidScores(props) {
         })
             .then((response) => {
                 console.log(response)
+                console.log(response.data.guildMembers)
                 setRaidScores(response.data.guildMembers);
             });
     }, []);
@@ -51,7 +52,7 @@ function RaidScores(props) {
                 members={2}
             />
             <DataGrid 
-                rows={rows}
+                rows={raidScores}
                 columns={columns}
             />
         </div>
