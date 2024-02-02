@@ -17,7 +17,7 @@ exports.handler = async (event, context, callback) => {
     try {
         switch (event.httpMethod) {
             case "GET": 
-                switch (event.resource) {
+                switch (event.path) {
                     case endpointMapping.GET.GuildData.path:
                         console.log("Endpoint: ", endpointMapping.GET.GuildData.description);
                         await getGuildData();
