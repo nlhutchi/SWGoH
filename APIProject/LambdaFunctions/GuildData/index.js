@@ -40,7 +40,7 @@ exports.handler = async (event, context, callback) => {
                         console.log("twData: ", twData.length);
                         console.log("twData: ", twData);
                         console.log("Endpoint: ", endpointMapping.POST.TWData.description);
-                        //await postTWData(guildId, []);
+                        await postTWData(guildId, twData);
                         return callback(null, returnObj);
                     default:
                         returnObj.body = "Path not found";
@@ -146,14 +146,16 @@ const postTWData = async  (guildId, twData) => {
                 PutRequest: {
                     Item: {
                         twRecordUUID: uuid(),
-                        twParticipationSearchIndex: `${guildId}#${row.currentRoundEndTime}#${row.allyCode}`,
-                        name: row.name.galactic_power,
-                        allyCode: row.allyCode,
-                        currentRoundEndTime: row.currentRoundEndTime,
-                        instance: row.instance,
-                        defensiveBanners: row.defensiveBanners,
-                        offensiveBanners: row.offensiveBanners,
-                        totalBanners: row.totalBanners,
+                        twParticipationSearchIndex: `${guildId}#${row.CurrentRoundEndTime}#${row.AllyCode}`,
+                        name: row.Name,
+                        discordTag: row.DiscordTag,
+                        allyCode: row.AllyCode,
+                        currentRoundEndTime: row.CurrentRoundEndTime,
+                        instance: row.Instance,
+                        defensiveBanners: row.set_defense_stars,
+                        offensiveBanners: row.attack_stars,
+                        totalBanners: row.stars,
+                        disobey: row.disobey,
                     }
                 }
             }
