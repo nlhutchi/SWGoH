@@ -112,6 +112,9 @@
                     "Variables": {
                         "GuildMemberTable": {
                             "Ref": "SWGoHGuildMembers"
+                        },
+                        "SWGoHTWParticipationTable": {
+                            "Ref": "SWGoHTWParticipation"
                         }
                     }
                 },
@@ -126,7 +129,8 @@
                                     "dynamodb:*"
                                 ],
                                 "Resource": [
-                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] }
+                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] },
+                                    { "Fn::GetAtt": ["SWGoHTWParticipation", "Arn"] }
                                 ]
                             }
                         ]
@@ -335,6 +339,50 @@
                     {
                         "AttributeName": "allyCode",
                         "KeyType": "HASH"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": 5,
+                    "WriteCapacityUnits": 5
+                }
+            }
+        },
+        "SWGoHTWParticipation": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "TableName":"swgoh-tw-records",
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "twRecordUUID",
+                        "AttributeType": "S"
+                    },
+                    {
+                        "AttributeName": "twParticipationSearchIndex",
+                        "AttributeType": "S"
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "twRecordUUID",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "GlobalSecondaryIndexes": [ 
+                    {
+                        "IndexName" : "twParticipationSearchIndex",
+                        "Projection": {
+                            "ProjectionType" : "ALL"
+                        },
+                        "KeySchema" : [ 
+                            {
+                                "AttributeName" : "twParticipationSearchIndex",
+                                "KeyType" : "HASH"
+                            }
+                        ],
+                        "ProvisionedThroughput" : {
+                            "ReadCapacityUnits": 5,
+                            "WriteCapacityUnits": 5
+                        }
                     }
                 ],
                 "ProvisionedThroughput": {
