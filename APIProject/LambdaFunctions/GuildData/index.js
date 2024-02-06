@@ -1,6 +1,6 @@
 const AWS = require("aws-sdk");
 const endpointMapping = require("./endpointMapping.json");
-const { uuid } = require('uuidv4');
+const { v } = require('uuidv4');
 
 var documentClient = new AWS.DynamoDB.DocumentClient();
 
@@ -96,7 +96,8 @@ async function getTWData() {
         }).promise()
             .then((response) => {
                 console.log("Success", response);
-                return response.Items;
+                returnObj.body = JSON.stringify({ twData: response.Items });
+                returnObj.statusCode = 200;
             });
         console.log("twData", twData);
     } catch(err) {
@@ -160,6 +161,7 @@ const postTWData = async  (guildId, twData) => {
                 }
             }
         });
+        console.log('tableArray', tableArray)
 
         
         var params = {
