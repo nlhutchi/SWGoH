@@ -128,7 +128,10 @@
                                 "Action": [
                                     "dynamodb:*"
                                 ],
-                                "Resource": { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] }
+                                "Resource": [
+                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] },
+                                    { "Fn::GetAtt": ["SWGoHTWParticipation", "Arn"] }
+                                ]
                             }
                         ]
                     }
