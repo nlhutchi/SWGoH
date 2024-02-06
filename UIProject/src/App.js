@@ -12,6 +12,7 @@ import axios from 'axios';
 import APIEndPoints from './services/api';
 import { setCharacterMasterData } from './actions/MasterDataActions';
 import RaidScores from './pages/RaidScores';
+import LandingPage from './pages/LandingPage';
 
 const useStyles = makeStyles({
     loadingSpinner: {
@@ -66,7 +67,8 @@ function App(props) {
                     //     </div> :
                         <Router history={Router.browserHistory}>
                             <Routes>
-                                <Route path="/" element={<RaidScores/>} />
+                                <Route path="/" element={<LandingPage/>} />
+                                <Route path="/Raids" element={<RaidScores/>} />
                                 {/* <Route path="/" element={<GuildPage/>} />
                                 <Route path="/Player/:guildId/:allyCode/" element={<PlayerPage />} /> */}
                             </Routes>

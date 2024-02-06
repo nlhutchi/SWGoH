@@ -69,8 +69,6 @@ const insertMembersToDB = async (guildMemberTable, guildMembers, guildId) => {
     } else {
         await uploadToTable(guildMemberTable, tableArray)
     }
-
-    
 }
 
 const uploadToTable = async (guildMemberTable, items) => {

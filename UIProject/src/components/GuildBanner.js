@@ -42,7 +42,7 @@ function GuildBanner(props) {
     return (
         <div className={classes.wrapper}>
             <div className={classes.columns}>
-                <img className={classes.guildImage} src={`https://swgoh.gg/static/img/assets/tex.${props.guildIcon}.png`} alt={props.guildIcon}/>
+                Koolaid Mens
             </div>
             <div className={`${classes.columns} ${classes.guildData}`}>
                 <div className={classes.dataRow}>
@@ -59,16 +59,16 @@ function GuildBanner(props) {
                 <Button 
                     variant="outlined"
                     className={classes.button}
-                    onClick={() => navigate(`/PlanTW/${props.guildId}/`)}
+                    onClick={() => navigate(`/Raids/`)}
                 >
-                    Plan TW
+                    Raid Report
                 </Button>
                 <Button
                     variant="outlined"
                     className={classes.button}
-                    onCLick={() => navigate(`/PlanTB/${props.guildId}/`)}
+                    onCLick={() => navigate(`/TB/`)}
                 >
-                    Plan TB
+                    TB Report
                 </Button>
             </div>
         </div>

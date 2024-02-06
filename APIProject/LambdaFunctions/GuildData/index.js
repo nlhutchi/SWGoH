@@ -1,5 +1,6 @@
 const AWS = require("aws-sdk");
 const endpointMapping = require("./endpointMapping.json");
+const { uuid } = require('uuidv4');
 
 var documentClient = new AWS.DynamoDB.DocumentClient();
 
@@ -21,6 +22,22 @@ exports.handler = async (event, context, callback) => {
                     case endpointMapping.GET.GuildData.path:
                         console.log("Endpoint: ", endpointMapping.GET.GuildData.description);
                         await getGuildData();
+                        return callback(null, returnObj);
+                    case endpointMapping.GET.TWData.path:
+                        console.log("Endpoint: ", endpointMapping.GET.TWData.description);
+                        await getTWData();
+                        return callback(null, returnObj);
+                    default:
+                        returnObj.body = "Path not found";
+                        returnObj.statusCode = 404;
+                        return callback(null, returnObj);
+                }
+            case "GET": 
+                switch (event.path) {
+                    case endpointMapping.POST.TWData.path:
+                        var { guildId } = JSON.parse(event.body)
+                        console.log("Endpoint: ", endpointMapping.POST.TWData.description);
+                        //await postTWData(guildId, []);
                         return callback(null, returnObj);
                     default:
                         returnObj.body = "Path not found";
@@ -56,16 +73,72 @@ async function getGuildData() {
             console.log("Error", err);
             returnObj.body = JSON.stringify({ message: 'failed', details: err });
             returnObj.statusCode = 400;
-        })
-    // await axiosInstance.get(`http://api.swgoh.gg/guild-profile/${guildId}/`)
-    //     .then((data) => {
-    //         console.log("Success", data);
-    //         returnObj.body = JSON.stringify({ ...data.data });
-    //         returnObj.statusCode = 200;
-    //     })
-    //     .catch((err) => {
-    //         console.log("Error", err);
-    //         returnObj.body = JSON.stringify({ message: 'failed', details: err });
-    //         returnObj.statusCode = 400;
-    //     });
+        });
+}
+
+
+async function getTWData() {
+    try {
+        let guildMembers = await documentClient.scan({
+            TableName: process.env.GuildMemberTable,
+        }).promise()
+            .then((response) => {
+                console.log("Success", response);
+                return response.Items 
+            });
+        console.log("guildMembers", guildMembers);
+
+        let twData = await documentClient.scan({
+            TableName: process.env.SWGoHTWParticipationTable,
+        }).promise()
+            .then((response) => {
+                console.log("Success", response);
+                return response.Items;
+            });
+        console.log("twData", twData);
+    } catch(err) {
+        console.log("Error", err);
+        returnObj.body = JSON.stringify({ message: 'failed', details: err });
+        returnObj.statusCode = 400;
+    }
+}
+
+const postTWData = async  (guildId, twData) => {
+    if(twData.length > 25) {
+        await postTWData(guildId, twData.slice(0, 24));
+        await postTWData(guildId, twData.slice(24, twData.length));
+    } else {
+        console.log('twData', twData)
+        var tableArray = twData.map((row) => {
+            return {
+                PutRequest: {
+                    Item: {
+                        allyCode: uuid(),
+                        twParticipationSearchIndex: `${guildId}#${row.currentRoundEndTime}#${row.allyCode}`,
+                        name: row.name.galactic_power,
+                        allyCode: row.allyCode,
+                        currentRoundEndTime: row.currentRoundEndTime,
+                        instance: row.instance,
+                        defensiveBanners: row.defensiveBanners,
+                        offensiveBanners: row.offensiveBanners,
+                        totalBanners: row.totalBanners,
+                    }
+                }
+            }
+        });
+
+        
+        var params = {
+            RequestItems: {
+                [process.env.SWGoHTWParticipationTable]: tableArray
+            }
+        };
+      
+        await documentClient.batchWrite(params).promise()
+            .then((response) => {
+                console.log('response', response);
+            }).catch((err) => {
+                console.log('err', err);
+            });
+    }
 }

@@ -2,7 +2,17 @@
     "GET": {
         "GuildData": {
             "path": "/GuildData/",
-            "description": "Get Data for Guild(swgoh.gg)"
+            "description": "Get Guild Member Data"
+        },
+        "TWData": {
+            "path": "/GuildData/TW/",
+            "description": "Get Member Data With TW Info."
+        }
+    },
+    "POST": {
+        "TWData": {
+            "path": "/GuildData/TW/",
+            "description": "Post Member Data for TW Participation."
         }
     }
 }
