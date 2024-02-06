@@ -35,7 +35,8 @@ exports.handler = async (event, context, callback) => {
             case "POST": 
                 switch (event.path) {
                     case endpointMapping.POST.TWData.path:
-                        var twData = reduceTWData(event.body.split(/\r?\n/));
+                        var guildId = event.queryStringParameters.guildId
+                        var twData = reduceTWData(guildId, event.body.split(/\r?\n/));
                         console.log("twData: ", twData.length);
                         console.log("twData: ", twData);
                         console.log("Endpoint: ", endpointMapping.POST.TWData.description);
@@ -105,7 +106,7 @@ async function getTWData() {
     }
 }
 
-const reduceTWData = (twArray) => {
+const reduceTWData = (guildId, twArray) => {
     let firstRow = twArray[0].split(',');
     let reducedObject = {};
     let objectifiedArray = twArray.slice(1, twArray.length).map((row) => {
