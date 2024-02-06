@@ -347,10 +347,10 @@
         "SWGoHTWParticipation": {
             "Type": "AWS::DynamoDB::Table",
             "Properties": {
-                "TableName":"swgoh-guild-members",
+                "TableName":"swgoh-tw-records",
                 "AttributeDefinitions": [
                     {
-                        "AttributeName": "twParticipationUUID",
+                        "AttributeName": "twRecordUUID",
                         "AttributeType": "N"
                     },
                     {
@@ -360,7 +360,7 @@
                 ],
                 "KeySchema": [
                     {
-                        "AttributeName": "twParticipationUUID",
+                        "AttributeName": "twRecordUUID",
                         "KeyType": "HASH"
                     }
                 ],

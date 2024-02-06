@@ -113,7 +113,7 @@ const postTWData = async  (guildId, twData) => {
             return {
                 PutRequest: {
                     Item: {
-                        allyCode: uuid(),
+                        twRecordUUID: uuid(),
                         twParticipationSearchIndex: `${guildId}#${row.currentRoundEndTime}#${row.allyCode}`,
                         name: row.name.galactic_power,
                         allyCode: row.allyCode,
