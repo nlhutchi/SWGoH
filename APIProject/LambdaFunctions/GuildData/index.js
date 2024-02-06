@@ -161,7 +161,7 @@ const postTWData = async  (guildId, twData) => {
                 }
             }
         });
-        console.log('tableArray', tableArray)
+        console.log('tableArray', JSON.stringify(tableArray))
 
         
         var params = {
@@ -173,6 +173,8 @@ const postTWData = async  (guildId, twData) => {
         await documentClient.batchWrite(params).promise()
             .then((response) => {
                 console.log('response', response);
+                returnObj.body = JSON.stringify({ ...response });
+                returnObj.statusCode = 200;
             }).catch((err) => {
                 console.log('err', err);
             });
