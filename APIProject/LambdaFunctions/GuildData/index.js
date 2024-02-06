@@ -110,20 +110,21 @@ const reduceTWData = (guildId, twArray) => {
     let firstRow = twArray[0].split(',');
     let reducedObject = {};
     let objectifiedArray = twArray.slice(1, twArray.length).map((row) => {
+        let splitRow = row.split(',');
         let returnObj = {};
         firstRow.forEach((val, index) => {
-            returnObj[val] = row[index];
+            returnObj[val] = splitRow[index];
         });
         return returnObj;
     });
 
     console.log("objectifiedArray", objectifiedArray);
     objectifiedArray.forEach(element => {
-        if(reducedObject[`${guildId}#${element.currentRoundEndTime}#${element.allyCode}`]) {
-            reducedObject[`${guildId}#${element.currentRoundEndTime}#${element.allyCode}`][element.MapStatId] = element.Score
+        if(reducedObject[`${guildId}#${element.CurrentRoundEndTime}#${element.AllyCode}`]) {
+            reducedObject[`${guildId}#${element.CurrentRoundEndTime}#${element.AllyCode}`][element.MapStatId] = element.Score
         } else {
-            reducedObject[`${guildId}#${element.currentRoundEndTime}#${element.allyCode}`] = {
-                twParticipationSearchIndex: `${guildId}#${element.currentRoundEndTime}#${element.allyCode}`,
+            reducedObject[`${guildId}#${element.CurrentRoundEndTime}#${element.AllyCode}`] = {
+                twParticipationSearchIndex: `${guildId}#${element.CurrentRoundEndTime}#${element.AllyCode}`,
                 ...element,
                 [element.MapStatId]: element.Score
             }
