@@ -32,10 +32,12 @@ exports.handler = async (event, context, callback) => {
                         returnObj.statusCode = 404;
                         return callback(null, returnObj);
                 }
-            case "GET": 
+            case "POST": 
                 switch (event.path) {
                     case endpointMapping.POST.TWData.path:
-                        var { guildId } = JSON.parse(event.body)
+                        var twData = reduceTWData(event.body.split(/\r?\n/));
+                        console.log("twData: ", twData.length);
+                        console.log("twData: ", twData);
                         console.log("Endpoint: ", endpointMapping.POST.TWData.description);
                         //await postTWData(guildId, []);
                         return callback(null, returnObj);
@@ -101,6 +103,34 @@ async function getTWData() {
         returnObj.body = JSON.stringify({ message: 'failed', details: err });
         returnObj.statusCode = 400;
     }
+}
+
+const reduceTWData = (twArray) => {
+    let firstRow = twArray[0].split(',');
+    let reducedObject = {};
+    let objectifiedArray = twArray.slice(1, twArray.length).map((row) => {
+        let returnObj = {};
+        firstRow.forEach((val, index) => {
+            returnObj[val] = row[index];
+        });
+        return returnObj;
+    });
+
+    console.log("objectifiedArray", objectifiedArray);
+    objectifiedArray.forEach(element => {
+        if(reducedObject[`${guildId}#${element.currentRoundEndTime}#${element.allyCode}`]) {
+            reducedObject[`${guildId}#${element.currentRoundEndTime}#${element.allyCode}`][element.MapStatId] = element.Score
+        } else {
+            reducedObject[`${guildId}#${element.currentRoundEndTime}#${element.allyCode}`] = {
+                twParticipationSearchIndex: `${guildId}#${element.currentRoundEndTime}#${element.allyCode}`,
+                ...element,
+                [element.MapStatId]: element.Score
+            }
+        }
+    });
+    console.log("reducedObject", reducedObject);
+
+    return Object.values(reducedObject);
 }
 
 const postTWData = async  (guildId, twData) => {
