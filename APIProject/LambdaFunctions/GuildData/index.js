@@ -1,6 +1,6 @@
 const AWS = require("aws-sdk");
 const endpointMapping = require("./endpointMapping.json");
-const { v } = require('uuidv4');
+const { uuid } = require('uuidv4');
 
 var documentClient = new AWS.DynamoDB.DocumentClient();
 
