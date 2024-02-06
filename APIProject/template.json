@@ -364,22 +364,24 @@
                         "KeyType": "HASH"
                     }
                 ],
-                "GlobalSecondaryIndexes": {
-                    "IndexName" : "twParticipationSearchIndex",
-                    "Projection": {
-                        "ProjectionType" : "ALL"
-                    },
-                    "KeySchema" : [ 
-                        {
-                            "AttributeName" : "twParticipationSearchIndex",
-                            "KeyType" : "HASH"
+                "GlobalSecondaryIndexes": [ 
+                    {
+                        "IndexName" : "twParticipationSearchIndex",
+                        "Projection": {
+                            "ProjectionType" : "ALL"
+                        },
+                        "KeySchema" : [ 
+                            {
+                                "AttributeName" : "twParticipationSearchIndex",
+                                "KeyType" : "HASH"
+                            }
+                        ],
+                        "ProvisionedThroughput" : {
+                            "ReadCapacityUnits": 5,
+                            "WriteCapacityUnits": 5
                         }
-                    ],
-                    "ProvisionedThroughput" : {
-                        "ReadCapacityUnits": 5,
-                        "WriteCapacityUnits": 5
                     }
-                  },
+                ],
                 "ProvisionedThroughput": {
                     "ReadCapacityUnits": 5,
                     "WriteCapacityUnits": 5
