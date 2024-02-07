@@ -112,6 +112,9 @@
                     "Variables": {
                         "GuildMemberTable": {
                             "Ref": "SWGoHGuildMembers"
+                        },
+                        "SWGoHAssetsTable": {
+                            "Ref": "SWGoHAssets"
                         }
                     }
                 },
@@ -126,7 +129,8 @@
                                     "dynamodb:*"
                                 ],
                                 "Resource": [
-                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] }
+                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] },
+                                    { "Fn::GetAtt": ["SWGoHAssets", "Arn"] }
                                 ]
                             }
                         ]
@@ -316,52 +320,11 @@
                     {
                         "AttributeName": "assetId",
                         "AttributeType": "S"
-                    },
-                    {
-                        "AttributeName": "searchIndex",
-                        "AttributeType": "S"
-                    }
-                ],
-                "GlobalSecondaryIndexes": [
-                    {
-                        "IndexName": "searchIndex",
-                        "Projection": {
-                            "ProjectionType" : "ALL"
-                        },
-                        "KeySchema" : [ 
-                            {
-                                "AttributeName" : "searchIndex",
-                                "KeyType" : "HASH"
-                            }
-                        ],
-                        "WriteProvisionedThroughputSettings": {
-                            "WriteCapacityAutoScalingSettings": {
-                                "MaxCapacity" : 5,
-                                "MinCapacity" : 1,
-                                "TargetTrackingScalingPolicyConfiguration" : {
-                                    "TargetValue" : 75.0
-                                }
-                            }
-                        }
                     }
                 ],
                 "Replicas": [ 
                     {
                         "Region": "us-west-2",
-                        "GlobalSecondaryIndexes": [ 
-                            {
-                                "IndexName": "searchIndex",
-                                "ReadProvisionedThroughputSettings": {
-                                    "ReadCapacityAutoScalingSettings": {
-                                        "MaxCapacity" : 5,
-                                        "MinCapacity" : 1,
-                                        "TargetTrackingScalingPolicyConfiguration" : {
-                                            "TargetValue" : 75.0
-                                        }
-                                    }
-                                }
-                            }
-                        ],
                         "ReadProvisionedThroughputSettings" : {
                             "ReadCapacityAutoScalingSettings": {
                                 "MaxCapacity" : 5,
