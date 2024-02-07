@@ -112,9 +112,6 @@
                     "Variables": {
                         "GuildMemberTable": {
                             "Ref": "SWGoHGuildMembers"
-                        },
-                        "SWGoHTWParticipationTable": {
-                            "Ref": "SWGoHTWParticipation"
                         }
                     }
                 },
@@ -129,8 +126,7 @@
                                     "dynamodb:*"
                                 ],
                                 "Resource": [
-                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] },
-                                    { "Fn::GetAtt": ["SWGoHTWParticipation", "Arn"] }
+                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] }
                                 ]
                             }
                         ]
@@ -280,51 +276,7 @@
                 "BuildMethod": "nodejs14.x"
             }
         },
-        "SWGoHPlatoons": {
-            "Type": "AWS::DynamoDB::Table",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-                "TableName":"swgoh-platoons",
-                "AttributeDefinitions": [
-                    {
-                        "AttributeName": "swgohPlatoonId",
-                        "AttributeType": "S"
-                    },
-                    {
-                        "AttributeName": "swgohPlatoonName",
-                        "AttributeType": "S"
-                    }
-                ],
-                "KeySchema": [
-                    {
-                        "AttributeName": "swgohPlatoonId",
-                        "KeyType": "HASH"
-                    }
-                ],
-                "GlobalSecondaryIndexes": [
-                    {
-                        "IndexName": "swgohPlatoonName",
-                        "KeySchema": [
-                            {
-                                "AttributeName": "swgohPlatoonName",
-                                "KeyType": "HASH"
-                            }
-                        ],
-                        "Projection": {
-                            "ProjectionType": "ALL"
-                        },
-                        "ProvisionedThroughput": {
-                            "ReadCapacityUnits": 5,
-                            "WriteCapacityUnits": 5
-                        }
-                    }
-                ],
-                "ProvisionedThroughput": {
-                    "ReadCapacityUnits": 5,
-                    "WriteCapacityUnits": 5
-                }
-            }
-        },
+        
         "SWGoHGuildMembers": {
             "Type": "AWS::DynamoDB::Table",
             "Properties": {
@@ -347,47 +299,88 @@
                 }
             }
         },
-        "SWGoHTWParticipation": {
-            "Type": "AWS::DynamoDB::Table",
+
+        
+        "SWGoHAssets": {
+            "Type": "AWS::DynamoDB::GlobalTable",
             "Properties": {
-                "TableName":"swgoh-tw-records",
-                "AttributeDefinitions": [
-                    {
-                        "AttributeName": "twRecordUUID",
-                        "AttributeType": "S"
-                    },
-                    {
-                        "AttributeName": "twParticipationSearchIndex",
-                        "AttributeType": "S"
-                    }
-                ],
+                "TableName": "swgoh-assets",
+                "BillingMode": "PROVISIONED",
                 "KeySchema": [
                     {
-                        "AttributeName": "twRecordUUID",
+                        "AttributeName": "assetId",
                         "KeyType": "HASH"
                     }
                 ],
-                "GlobalSecondaryIndexes": [ 
+                "AttributeDefinitions": [
                     {
-                        "IndexName" : "twParticipationSearchIndex",
+                        "AttributeName": "assetId",
+                        "AttributeType": "S"
+                    },
+                    {
+                        "AttributeName": "searchIndex",
+                        "AttributeType": "S"
+                    }
+                ],
+                "GlobalSecondaryIndexes": [
+                    {
+                        "IndexName": "searchIndex",
                         "Projection": {
                             "ProjectionType" : "ALL"
                         },
                         "KeySchema" : [ 
                             {
-                                "AttributeName" : "twParticipationSearchIndex",
+                                "AttributeName" : "searchIndex",
                                 "KeyType" : "HASH"
                             }
                         ],
-                        "ProvisionedThroughput" : {
-                            "ReadCapacityUnits": 5,
-                            "WriteCapacityUnits": 5
+                        "WriteProvisionedThroughputSettings": {
+                            "WriteCapacityAutoScalingSettings": {
+                                "MaxCapacity" : 5,
+                                "MinCapacity" : 1,
+                                "TargetTrackingScalingPolicyConfiguration" : {
+                                    "TargetValue" : 75.0
+                                }
+                            }
                         }
                     }
                 ],
-                "ProvisionedThroughput": {
-                    "ReadCapacityUnits": 5,
-                    "WriteCapacityUnits": 5
+                "Replicas": [ 
+                    {
+                        "Region": "us-west-2",
+                        "GlobalSecondaryIndexes": [ 
+                            {
+                                "IndexName": "searchIndex",
+                                "ReadProvisionedThroughputSettings": {
+                                    "ReadCapacityAutoScalingSettings": {
+                                        "MaxCapacity" : 5,
+                                        "MinCapacity" : 1,
+                                        "TargetTrackingScalingPolicyConfiguration" : {
+                                            "TargetValue" : 75.0
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "ReadProvisionedThroughputSettings" : {
+                            "ReadCapacityAutoScalingSettings": {
+                                "MaxCapacity" : 5,
+                                "MinCapacity" : 1,
+                                "TargetTrackingScalingPolicyConfiguration" : {
+                                    "TargetValue" : 75.0
+                                }
+                            }
+                        }
+                    }
+                ],
+                "WriteProvisionedThroughputSettings": {
+                    "WriteCapacityAutoScalingSettings": {
+                        "MaxCapacity" : 5,
+                        "MinCapacity" : 1,
+                        "TargetTrackingScalingPolicyConfiguration" : {
+                            "TargetValue" : 75.0
+                        }
+                    }
                 }
             }
         }
