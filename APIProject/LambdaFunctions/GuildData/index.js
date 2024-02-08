@@ -162,38 +162,36 @@ const postTWData = async  (guildId, twData) => {
         var tableArray = twData.map((row) => {
             return {
                 Update: {
-                    Item: {
-                        TableName: process.env.GuildMemberTable,
-                        Key: { allyCode: row.AllyCode },
-                        UpdateExpression: `set #a = ${{
-                            name: row.Name,
-                            discordTag: row.DiscordTag,
-                            allyCode: row.AllyCode,
-                            currentRoundEndTime: row.CurrentRoundEndTime,
-                            instance: row.Instance,
-                            defensiveBanners: row.set_defense_stars,
-                            offensiveBanners: row.attack_stars,
-                            totalBanners: row.stars,
-                            disobey: row.disobey
-                        }}`,
-                        ExpressionAttributeNames: {'#a' : 'twHistory'},
-                        ExpressionAttributeValues: {
-                          ':x' : 20,
-                          ':y' : 45,
-                          ':MAX' : 100,
-                        }
-                        // twRecordUUID: uuid(),
-                        // twParticipationSearchIndex: `${guildId}#${row.CurrentRoundEndTime}#${row.AllyCode}`,
-                        // name: row.Name,
-                        // discordTag: row.DiscordTag,
-                        // allyCode: row.AllyCode,
-                        // currentRoundEndTime: row.CurrentRoundEndTime,
-                        // instance: row.Instance,
-                        // defensiveBanners: row.set_defense_stars,
-                        // offensiveBanners: row.attack_stars,
-                        // totalBanners: row.stars,
-                        // disobey: row.disobey,
+                    TableName: process.env.GuildMemberTable,
+                    Key: { allyCode: row.AllyCode },
+                    UpdateExpression: `set #a = ${{
+                        name: row.Name,
+                        discordTag: row.DiscordTag,
+                        allyCode: row.AllyCode,
+                        currentRoundEndTime: row.CurrentRoundEndTime,
+                        instance: row.Instance,
+                        defensiveBanners: row.set_defense_stars,
+                        offensiveBanners: row.attack_stars,
+                        totalBanners: row.stars,
+                        disobey: row.disobey
+                    }}`,
+                    ExpressionAttributeNames: {'#a' : 'twHistory'},
+                    ExpressionAttributeValues: {
+                        ':x' : 20,
+                        ':y' : 45,
+                        ':MAX' : 100,
                     }
+                    // twRecordUUID: uuid(),
+                    // twParticipationSearchIndex: `${guildId}#${row.CurrentRoundEndTime}#${row.AllyCode}`,
+                    // name: row.Name,
+                    // discordTag: row.DiscordTag,
+                    // allyCode: row.AllyCode,
+                    // currentRoundEndTime: row.CurrentRoundEndTime,
+                    // instance: row.Instance,
+                    // defensiveBanners: row.set_defense_stars,
+                    // offensiveBanners: row.attack_stars,
+                    // totalBanners: row.stars,
+                    // disobey: row.disobey,
                 }
             }
         });
