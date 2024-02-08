@@ -36,11 +36,13 @@ exports.handler = async (event, context, callback) => {
                 switch (event.path) {
                     case endpointMapping.POST.TWData.path:
                         var guildId = event.queryStringParameters.guildId
-                        var twData = reduceTWData(guildId, event.body.split(/\r?\n/));
+                        var {twData, TWColumns} = reduceTWData(guildId, event.body.split(/\r?\n/));
                         console.log("twData: ", twData.length);
                         console.log("twData: ", twData);
+                        console.log("TWColumns: ", TWColumns);
                         console.log("Endpoint: ", endpointMapping.POST.TWData.description);
                         await postTWData(guildId, twData);
+                        await postTWAssets(TWColumns);
                         return callback(null, returnObj);
                     default:
                         returnObj.body = "Path not found";
@@ -110,6 +112,7 @@ async function getTWData() {
 const reduceTWData = (guildId, twArray) => {
     let firstRow = twArray[0].split(',');
     let reducedObject = {};
+    let TWColumns = {};
     let objectifiedArray = twArray.slice(1, twArray.length).map((row) => {
         let splitRow = row.split(',');
         let returnObj = {};
@@ -121,6 +124,15 @@ const reduceTWData = (guildId, twArray) => {
 
     console.log("objectifiedArray", objectifiedArray);
     objectifiedArray.forEach(element => {
+        //columns
+        if(!TWColumns[element.CurrentRoundEndTime]) {
+            TWColumns[element.CurrentRoundEndTime] = {
+                currentRoundEndTime: element.CurrentRoundEndTime,
+                opponent: element.Instance,
+            }
+        }
+
+        //rows
         if(reducedObject[`${guildId}#${element.CurrentRoundEndTime}#${element.AllyCode}`]) {
             reducedObject[`${guildId}#${element.CurrentRoundEndTime}#${element.AllyCode}`][element.MapStatId] = element.Score
         } else {
@@ -132,8 +144,13 @@ const reduceTWData = (guildId, twArray) => {
         }
     });
     console.log("reducedObject", reducedObject);
+    console.log("TWColumns", TWColumns);
 
-    return Object.values(reducedObject);
+    return { twData: Object.values(reducedObject), TWColumns };
+}
+
+const postTWAssets = async (TWColumns) => {
+
 }
 
 const postTWData = async  (guildId, twData) => {
@@ -144,19 +161,38 @@ const postTWData = async  (guildId, twData) => {
         console.log('twData', twData)
         var tableArray = twData.map((row) => {
             return {
-                PutRequest: {
+                Update: {
                     Item: {
-                        twRecordUUID: uuid(),
-                        twParticipationSearchIndex: `${guildId}#${row.CurrentRoundEndTime}#${row.AllyCode}`,
-                        name: row.Name,
-                        discordTag: row.DiscordTag,
-                        allyCode: row.AllyCode,
-                        currentRoundEndTime: row.CurrentRoundEndTime,
-                        instance: row.Instance,
-                        defensiveBanners: row.set_defense_stars,
-                        offensiveBanners: row.attack_stars,
-                        totalBanners: row.stars,
-                        disobey: row.disobey,
+                        TableName: process.env.GuildMemberTable,
+                        Key: { allyCode: row.AllyCode },
+                        UpdateExpression: `set #a = ${{
+                            name: row.Name,
+                            discordTag: row.DiscordTag,
+                            allyCode: row.AllyCode,
+                            currentRoundEndTime: row.CurrentRoundEndTime,
+                            instance: row.Instance,
+                            defensiveBanners: row.set_defense_stars,
+                            offensiveBanners: row.attack_stars,
+                            totalBanners: row.stars,
+                            disobey: row.disobey
+                        }}`,
+                        ExpressionAttributeNames: {'#a' : 'twHistory'},
+                        ExpressionAttributeValues: {
+                          ':x' : 20,
+                          ':y' : 45,
+                          ':MAX' : 100,
+                        }
+                        // twRecordUUID: uuid(),
+                        // twParticipationSearchIndex: `${guildId}#${row.CurrentRoundEndTime}#${row.AllyCode}`,
+                        // name: row.Name,
+                        // discordTag: row.DiscordTag,
+                        // allyCode: row.AllyCode,
+                        // currentRoundEndTime: row.CurrentRoundEndTime,
+                        // instance: row.Instance,
+                        // defensiveBanners: row.set_defense_stars,
+                        // offensiveBanners: row.attack_stars,
+                        // totalBanners: row.stars,
+                        // disobey: row.disobey,
                     }
                 }
             }
@@ -165,9 +201,7 @@ const postTWData = async  (guildId, twData) => {
 
         
         var params = {
-            RequestItems: {
-                [process.env.SWGoHTWParticipationTable]: tableArray
-            }
+            TransactItems: tableArray
         };
       
         await documentClient.batchWrite(params).promise()
