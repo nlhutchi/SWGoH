@@ -204,7 +204,7 @@ const postTWData = async  (guildId, twData) => {
             TransactItems: tableArray
         };
       
-        await documentClient.batchWrite(params).promise()
+        await documentClient.transactWrite(params).promise()
             .then((response) => {
                 console.log('response', response);
                 returnObj.body = JSON.stringify({ ...response });
