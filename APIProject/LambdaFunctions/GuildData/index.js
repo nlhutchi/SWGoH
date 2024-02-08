@@ -164,7 +164,7 @@ const postTWData = async  (guildId, twData) => {
                 Update: {
                     TableName: process.env.GuildMemberTable,
                     Key: { allyCode: row.AllyCode },
-                    UpdateExpression: `set #a = ${{
+                    UpdateExpression: `set #a = ${JSON.stringify({
                         name: row.Name,
                         discordTag: row.DiscordTag,
                         allyCode: row.AllyCode,
@@ -174,13 +174,8 @@ const postTWData = async  (guildId, twData) => {
                         offensiveBanners: row.attack_stars,
                         totalBanners: row.stars,
                         disobey: row.disobey
-                    }}`,
+                    })}`,
                     ExpressionAttributeNames: {'#a' : 'twHistory'},
-                    ExpressionAttributeValues: {
-                        ':x' : 20,
-                        ':y' : 45,
-                        ':MAX' : 100,
-                    }
                     // twRecordUUID: uuid(),
                     // twParticipationSearchIndex: `${guildId}#${row.CurrentRoundEndTime}#${row.AllyCode}`,
                     // name: row.Name,
