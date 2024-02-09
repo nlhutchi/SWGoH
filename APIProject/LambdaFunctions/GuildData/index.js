@@ -176,7 +176,7 @@ const reduceTWData = (guildId, twArray) => {
 
 const postTWAssets = async (TWColumns, guildId) => {
     var params = {
-        TableName: process.env.guildsTable,
+        TableName: process.env.GuildsTable,
         Key: { guildId : guildId },
         UpdateExpression: 'set #trackedTW = :TWColumns',
         ExpressionAttributeNames: {
