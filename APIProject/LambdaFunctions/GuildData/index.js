@@ -92,7 +92,7 @@ const getMembers = async () => {
 const getGuild = async () => {
     var params = {
         Key: { guildId: '5kekVkXxRf6VgXEUvN16yA'},
-        TableName: process.env.GuildMemberTable,
+        TableName: process.env.GuildsTable,
     };
     console.log("get params", params)
 
