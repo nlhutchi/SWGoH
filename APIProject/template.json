@@ -113,8 +113,8 @@
                         "GuildMemberTable": {
                             "Ref": "SWGoHGuildMembers"
                         },
-                        "SWGoHAssetsTable": {
-                            "Ref": "SWGoHAssets"
+                        "GuildsTable": {
+                            "Ref": "SWGoHGuilds"
                         }
                     }
                 },
@@ -130,7 +130,7 @@
                                 ],
                                 "Resource": [
                                     { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] },
-                                    { "Fn::GetAtt": ["SWGoHAssets", "Arn"] }
+                                    { "Fn::GetAtt": ["SWGoHGuilds", "Arn"] }
                                 ]
                             }
                         ]
@@ -189,6 +189,9 @@
                         "GuildId": "5kekVkXxRf6VgXEUvN16yA",
                         "GuildMemberTable": {
                             "Ref": "SWGoHGuildMembers"
+                        },
+                        "GuildsTable": {
+                            "Ref": "SWGoHGuilds"
                         }
                     }
                 },
@@ -202,7 +205,10 @@
                                 "Action": [
                                     "dynamodb:*"
                                 ],
-                                "Resource": { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] }
+                                "Resource": [
+                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] },
+                                    { "Fn::GetAtt": ["SWGoHGuilds", "Arn"] }
+                                ]
                             }
                         ]
                     }
