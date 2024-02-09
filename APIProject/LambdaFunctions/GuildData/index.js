@@ -94,11 +94,12 @@ const getGuild = async () => {
         Key: { guildId: '5kekVkXxRf6VgXEUvN16yA'},
         TableName: process.env.GuildMemberTable,
     };
+    console.log("get params", params)
 
     return await documentClient.get(params).promise()
         .then((response) => {
             console.log("Success get guild", response);
-            return response;
+            return response.Item;
         });
 }
 
