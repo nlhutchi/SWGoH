@@ -66,9 +66,16 @@ function GuildBanner(props) {
                 <Button
                     variant="outlined"
                     className={classes.button}
-                    onCLick={() => navigate(`/TB/`)}
+                    onClick={() => navigate(`/TB/`)}
                 >
                     TB Report
+                </Button>
+                <Button
+                    variant="outlined"
+                    className={classes.button}
+                    onClick={() => navigate(`/TW/5kekVkXxRf6VgXEUvN16yA/`)}
+                >
+                    TW Report
                 </Button>
             </div>
         </div>

@@ -3,8 +3,12 @@ import axios from 'axios';
 import APIEndPoints from '../services/api';
 import { DataGrid } from '@mui/x-data-grid';
 import GuildBanner from '../components/GuildBanner';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
 
-const columns = [
+const overviewColumns = [
     { field: 'id', headerName: 'Ally Code', width: 150 },
     {
       field: 'name',
@@ -19,38 +23,64 @@ const columns = [
     },
 ];
 
-function LandingPage(props) {
-    const [ guildMembers, setGuildMembers] = useState([]);
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`full-width-tabpanel-${index}`}
+        aria-labelledby={`full-width-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+            <Typography>{children}</Typography>
+        )}
+      </div>
+    );
+}
 
-    useEffect(async () => {
-        await axios({
-            method: 'get',
-            url: APIEndPoints.GUILD_DATA
-        })
-            .then((response) => {
-                console.log(response)
-                console.log(response.data.guildMembers)
-                setGuildMembers(response.data.guildMembers.map((member) => {
-                    return {
-                        ...member,
-                        id: member.allyCode
-                    }
-                }));
-            });
-    }, []);
+function LandingPage(props) {
+    const [ tab, setTab ] = useState(0);
   
     return (
         <div>
-            <GuildBanner 
-                guildIcon={"1"}
-                guildId={"123"}
-                GP={2}
-                members={2}
-            />
-            <DataGrid 
-                rows={guildMembers}
-                columns={columns}
-            />
+            <AppBar position="static">
+                <Tabs
+                    value={tab}
+                    onChange={(e, value) => setTab(value)}
+                    indicatorColor="secondary"
+                    textColor="inherit"
+                    variant="fullWidth"
+                    aria-label="Guild Tabs"
+                >
+                    <Tab label="Overview" />
+                    <Tab label="Raid Report" />
+                    <Tab label="TW Breakdown" />
+                    <Tab label="TB Breakdown" />
+                </Tabs>
+            </AppBar>
+            <TabPanel value={tab} index={0}>
+                <DataGrid 
+                    rows={props ? (props.memberData || []).map((row) => {
+                        return {
+                            ...row,
+                            id: row.allyCode
+                        }
+                    }) : []}
+                    columns={overviewColumns}
+                />
+            </TabPanel>
+            <TabPanel value={tab} index={1}>
+                Raid Report
+            </TabPanel>
+            <TabPanel value={tab} index={2}>
+                TW Breakdown
+            </TabPanel>
+            <TabPanel value={tab} index={3}>
+                TB Breakdown
+            </TabPanel>
         </div>
     );
 }

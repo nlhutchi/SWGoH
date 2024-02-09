@@ -13,6 +13,7 @@ import APIEndPoints from './services/api';
 import { setCharacterMasterData } from './actions/MasterDataActions';
 import RaidScores from './pages/RaidScores';
 import LandingPage from './pages/LandingPage';
+import TWReport from './pages/TWReport';
 
 const useStyles = makeStyles({
     loadingSpinner: {
@@ -26,34 +27,34 @@ const useStyles = makeStyles({
 function App(props) {
     const classes = useStyles();
     const { token, setToken } = useToken();
+    const { selectedGuild, setSelectedGuild } = useState('5kekVkXxRf6VgXEUvN16yA');
+    const [ guildData, setGuildData ] = useState();
+    const [ memberData, setMemberData ] = useState();
     const [ isLoading, setIsLoading ] = useState(false);
     const [ isLoadingError, setIsLoadingError ] = useState(false);
 
-    // useEffect(() => {
-    //     setToken(null)
-    //     setIsLoading(true);
-    // }, []);
+    useEffect(() => {
+        // setToken(null)
+        setIsLoading(true);
+    }, []);
 
-    // useEffect(() => {
-    //     if(isLoading) {
-    //         loadMasterData();
-    //     };
-    // }, [isLoading]);
+    useEffect(() => {
+        if(isLoading) {
+            loadGuildData();
+        };
+    }, [isLoading]);
 
-    // const loadMasterData = async () => {
-    //     axios({
-    //         method: 'get',
-    //         url: APIEndPoints.CHARACTER_DATA
-    //     })
-    //         .then((response) => {
-    //             props.setCharacterMasterData(response.data);
-    //             setIsLoading(false);
-    //         })
-    //         .catch((err) => {
-    //             console.error(!isLoadingError)
-    //             setIsLoadingError(true);
-    //         });
-    // }
+    const loadGuildData = async () => {
+        await axios({
+            method: 'get',
+            url: APIEndPoints.GUILD_DATA
+        })
+            .then((response) => {
+                console.log(response)
+                setGuildData(response.data.guild)
+                setMemberData(response.data.guildMembers)
+            });
+    }
     
     // if(!token) {
     //     return <Login setToken={setToken} />
@@ -67,8 +68,9 @@ function App(props) {
                     //     </div> :
                         <Router history={Router.browserHistory}>
                             <Routes>
-                                <Route path="/" element={<LandingPage/>} />
+                                <Route path="/" element={<LandingPage guildData={guildData} memberData={memberData}/>} />
                                 <Route path="/Raids" element={<RaidScores/>} />
+                                <Route path="/TW/:guildId/" element={<TWReport/>} />
                                 {/* <Route path="/" element={<GuildPage/>} />
                                 <Route path="/Player/:guildId/:allyCode/" element={<PlayerPage />} /> */}
                             </Routes>
