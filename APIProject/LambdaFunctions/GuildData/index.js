@@ -64,20 +64,41 @@ exports.handler = async (event, context, callback) => {
 };
 
 async function getGuildData() {
+    try {
+        const members = await getMembers();
+        const guild = await getGuild();
+
+        returnObj.body = JSON.stringify({ guild: guild, guildMembers: members });
+        returnObj.statusCode = 200;
+    } catch(err) {
+        console.log("Error", err);
+        returnObj.body = JSON.stringify({ message: 'failed', details: err });
+        returnObj.statusCode = 400;
+    }
+}
+
+const getMembers = async () => {
     var params = {
         TableName: process.env.GuildMemberTable,
     };
 
-    await documentClient.scan(params).promise()
+    return await documentClient.scan(params).promise()
         .then((response) => {
             console.log("Success", response);
-            returnObj.body = JSON.stringify({ guildMembers: response.Items });
-            returnObj.statusCode = 200;
-        })
-        .catch((err) => {
-            console.log("Error", err);
-            returnObj.body = JSON.stringify({ message: 'failed', details: err });
-            returnObj.statusCode = 400;
+            return response.Items;
+        });
+}
+
+const getGuild = async () => {
+    var params = {
+        Key: { guildId: '5kekVkXxRf6VgXEUvN16yA'},
+        TableName: process.env.GuildMemberTable,
+    };
+
+    return await documentClient.get(params).promise()
+        .then((response) => {
+            console.log("Success get guild", response);
+            return response;
         });
 }
 
