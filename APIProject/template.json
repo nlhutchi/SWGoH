@@ -346,6 +346,49 @@
                     }
                 }
             }
+        },
+
+        "SWGoHGuilds": {
+            "Type": "AWS::DynamoDB::GlobalTable",
+            "Properties": {
+                "TableName": "swgoh-guilds",
+                "BillingMode": "PROVISIONED",
+                "KeySchema": [
+                    {
+                        "AttributeName": "guildId",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "guildId",
+                        "AttributeType": "N"
+                    }
+                ],
+                "Replicas": [ 
+                    {
+                        "Region": "us-west-2",
+                        "ReadProvisionedThroughputSettings" : {
+                            "ReadCapacityAutoScalingSettings": {
+                                "MaxCapacity" : 5,
+                                "MinCapacity" : 1,
+                                "TargetTrackingScalingPolicyConfiguration" : {
+                                    "TargetValue" : 75.0
+                                }
+                            }
+                        }
+                    }
+                ],
+                "WriteProvisionedThroughputSettings": {
+                    "WriteCapacityAutoScalingSettings": {
+                        "MaxCapacity" : 5,
+                        "MinCapacity" : 1,
+                        "TargetTrackingScalingPolicyConfiguration" : {
+                            "TargetValue" : 75.0
+                        }
+                    }
+                }
+            }
         }
     }
 }

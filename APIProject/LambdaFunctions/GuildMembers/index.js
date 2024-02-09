@@ -21,6 +21,7 @@ exports.handler = async (event, context, callback) => {
 
     var guildInfo = await getGuildMembers(process.env.GuildId);
     console.log('guildInfo', guildInfo)
+    await insertGuildToDB(process.env.GuildsTable, guildInfo);
     await insertMembersToDB(process.env.GuildMemberTable, guildInfo.members, guildInfo.guild_id);
 
     return callback(null, guildInfo);
@@ -43,6 +44,32 @@ async function getGuildMembers(guildId) {
     return guildMembers;
 }
 
+const insertGuildToDB = async (guildsTable, guildInfo) => {
+    var params = {
+        TableName: guildsTable,
+        Key: { guildId : guildInfo.guild_id },
+        UpdateExpression: 'set #lastUpdated = :updatedTime, #gp = :gp, #members = :members, #name = :name',
+        ExpressionAttributeNames: {
+            '#lastUpdated' : 'lastUpdated',
+            '#gp' : 'gp',
+            '#members' : 'members',
+            '#name' : 'name'
+        },
+        ExpressionAttributeValues: {
+          ':updatedTime' : new Date().toISOString(),
+          ':gp' : guildInfo.galactic_power,
+          ':members' : guildInfo.member_count,
+          ':name' : guildInfo.name,
+        }
+    };
+      
+    await documentClient.update(params).promise()
+        .then((response) => {
+            console.log('response', response);
+        }).catch((err) => {
+            console.log('err', err);
+        })
+}
 
 const insertMembersToDB = async (guildMemberTable, guildMembers, guildId) => {
     console.log('guildMembers', guildMembers)

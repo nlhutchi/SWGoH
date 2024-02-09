@@ -42,7 +42,7 @@ exports.handler = async (event, context, callback) => {
                         console.log("TWColumns: ", TWColumns);
                         console.log("Endpoint: ", endpointMapping.POST.TWData.description);
                         await postTWData(guildId, twData);
-                        await postTWAssets(TWColumns);
+                        await postTWAssets(Object.values(TWColumns), guildId);
                         return callback(null, returnObj);
                     default:
                         returnObj.body = "Path not found";
@@ -124,6 +124,10 @@ const reduceTWData = (guildId, twArray) => {
 
     console.log("objectifiedArray", objectifiedArray);
     objectifiedArray.forEach(element => {
+        if(!element.AllyCode) {
+            return
+        }
+        
         //columns
         if(!TWColumns[element.CurrentRoundEndTime]) {
             TWColumns[element.CurrentRoundEndTime] = {
@@ -149,8 +153,25 @@ const reduceTWData = (guildId, twArray) => {
     return { twData: Object.values(reducedObject), TWColumns };
 }
 
-const postTWAssets = async (TWColumns) => {
-
+const postTWAssets = async (TWColumns, guildId) => {
+    var params = {
+        TableName: process.env.guildsTable,
+        Key: { guildId : guildId },
+        UpdateExpression: 'set #trackedTW = :TWColumns',
+        ExpressionAttributeNames: {
+            '#trackedTW' : 'trackedTW'
+        },
+        ExpressionAttributeValues: {
+          ':TWColumns' : TWColumns
+        }
+    };
+      
+    await documentClient.update(params).promise()
+        .then((response) => {
+            console.log('response', response);
+        }).catch((err) => {
+            console.log('err', err);
+        })
 }
 
 const postTWData = async  (guildId, twData) => {
@@ -163,14 +184,14 @@ const postTWData = async  (guildId, twData) => {
             return {
                 Update: {
                     TableName: process.env.GuildMemberTable,
-                    Key: { allyCode: row.AllyCode },
+                    Key: { allyCode: Number(row.AllyCode) },
                     UpdateExpression: `set #a = :x`,
                     ExpressionAttributeNames: {'#a' : 'twHistory'},
                     ExpressionAttributeValues: {
                         ':x' : {
                             name: row.Name,
                             discordTag: row.DiscordTag,
-                            allyCode: row.AllyCode,
+                            allyCode: Number(row.AllyCode),
                             currentRoundEndTime: row.CurrentRoundEndTime,
                             instance: row.Instance,
                             defensiveBanners: row.set_defense_stars,
@@ -179,17 +200,6 @@ const postTWData = async  (guildId, twData) => {
                             disobey: row.disobey
                         }
                     }
-                    // twRecordUUID: uuid(),
-                    // twParticipationSearchIndex: `${guildId}#${row.CurrentRoundEndTime}#${row.AllyCode}`,
-                    // name: row.Name,
-                    // discordTag: row.DiscordTag,
-                    // allyCode: row.AllyCode,
-                    // currentRoundEndTime: row.CurrentRoundEndTime,
-                    // instance: row.Instance,
-                    // defensiveBanners: row.set_defense_stars,
-                    // offensiveBanners: row.attack_stars,
-                    // totalBanners: row.stars,
-                    // disobey: row.disobey,
                 }
             }
         });
