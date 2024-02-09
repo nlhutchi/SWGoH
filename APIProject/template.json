@@ -112,6 +112,9 @@
                     "Variables": {
                         "GuildMemberTable": {
                             "Ref": "SWGoHGuildMembers"
+                        },
+                        "GuildsTable": {
+                            "Ref": "SWGoHGuilds"
                         }
                     }
                 },
@@ -126,7 +129,8 @@
                                     "dynamodb:*"
                                 ],
                                 "Resource": [
-                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] }
+                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] },
+                                    { "Fn::GetAtt": ["SWGoHGuilds", "Arn"] }
                                 ]
                             }
                         ]
@@ -185,6 +189,9 @@
                         "GuildId": "5kekVkXxRf6VgXEUvN16yA",
                         "GuildMemberTable": {
                             "Ref": "SWGoHGuildMembers"
+                        },
+                        "GuildsTable": {
+                            "Ref": "SWGoHGuilds"
                         }
                     }
                 },
@@ -199,7 +206,8 @@
                                     "dynamodb:*"
                                 ],
                                 "Resource": [
-                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] }
+                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] },
+                                    { "Fn::GetAtt": ["SWGoHGuilds", "Arn"] }
                                 ]
                             }
                         ]
@@ -317,6 +325,49 @@
                 "AttributeDefinitions": [
                     {
                         "AttributeName": "assetId",
+                        "AttributeType": "S"
+                    }
+                ],
+                "Replicas": [ 
+                    {
+                        "Region": "us-west-2",
+                        "ReadProvisionedThroughputSettings" : {
+                            "ReadCapacityAutoScalingSettings": {
+                                "MaxCapacity" : 5,
+                                "MinCapacity" : 1,
+                                "TargetTrackingScalingPolicyConfiguration" : {
+                                    "TargetValue" : 75.0
+                                }
+                            }
+                        }
+                    }
+                ],
+                "WriteProvisionedThroughputSettings": {
+                    "WriteCapacityAutoScalingSettings": {
+                        "MaxCapacity" : 5,
+                        "MinCapacity" : 1,
+                        "TargetTrackingScalingPolicyConfiguration" : {
+                            "TargetValue" : 75.0
+                        }
+                    }
+                }
+            }
+        },
+
+        "SWGoHGuilds": {
+            "Type": "AWS::DynamoDB::GlobalTable",
+            "Properties": {
+                "TableName": "swgoh-guilds",
+                "BillingMode": "PROVISIONED",
+                "KeySchema": [
+                    {
+                        "AttributeName": "guildId",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "guildId",
                         "AttributeType": "S"
                     }
                 ],
