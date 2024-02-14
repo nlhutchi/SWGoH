@@ -1,5 +1,6 @@
 const AWS = require("aws-sdk");
 const axios = require('axios');
+const jsdom = require("jsdom");
 
 var documentClient = new AWS.DynamoDB.DocumentClient();
 
@@ -30,15 +31,14 @@ exports.handler = async (event, context, callback) => {
         if(!axiosInstance) {
             axiosInstance = createAxiosInstance();
         }
-        const response = await axiosInstance.get(`"https://swgoh.gg/g/jrl9Q-_CRDGdMyNjTQH1rQ/raid-history/"`)
+        const response = await axiosInstance.get(`https://swgoh.gg/g/jrl9Q-_CRDGdMyNjTQH1rQ/raid-history/`)
             .then((response) => {
                 console.log("Success", response);
-                console.log("Success 2", response.data.data);
-                return response.data.data;
+                console.log("Success 2", response.data);
+                return response.data;
             })
-        const raids = await response.json();
-        console.log("raids", raids)
-        parseRaids(raids)
+        console.log("response", response)
+        parseRaids(response)
     } catch (err) {
         console.log("ERROR: ", err);
         returnObj.statusCode = 500;
@@ -48,5 +48,10 @@ exports.handler = async (event, context, callback) => {
 };
 
 const parseRaids = (raids) => {
-
+    // var raidTable = document.createElement( 'html' );
+    // raidTable.innerHTML = raids;
+    // raidTable.getElementsByTagName( 'table' )
+    // const parser = new DOMParser();
+    const htmlDoc = new jsdom.JSDOM(raids);
+    console.log("raidTable", htmlDoc.window.document.getElementsByTagName("table"));
 }
