@@ -52,6 +52,17 @@ const parseRaids = (raids) => {
     // raidTable.innerHTML = raids;
     // raidTable.getElementsByTagName( 'table' )
     // const parser = new DOMParser();
-    const htmlDoc = new jsdom.JSDOM(raids);
-    console.log("raidTable", htmlDoc.window.document.getElementsByTagName("table"));
+    let raidsPerformed = [];
+    const $ = cheerio.load(raids);
+    const raidsList = $("table");
+    raidsList.each(() => {
+        console.log("$(this)", $(this))
+        let raidLink = $(this).find("a").href()
+        let raidDate = $(this).find("td:last").text()
+        raidsPerformed.push({
+            raidLink,
+            raidDate
+        })
+    })
+    console.log("raidsPerformed", raidsPerformed);
 }
