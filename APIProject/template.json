@@ -170,6 +170,39 @@
                 }
             }
         },
+        "RaidData": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "FunctionName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            { "Ref": "AppName" },
+                            "RaidData"
+                        ]
+                    ]
+                },
+                "CodeUri": "./LambdaFunctions/RaidData",
+                "Timeout": 30,
+                "Policies": [
+                    {
+                        "Version": "2012-10-17",
+                        "Statement": [
+                            {
+                                "Sid": "DynamoDBPermissions",
+                                "Effect": "Allow",
+                                "Action": [
+                                    "dynamodb:*"
+                                ],
+                                "Resource": [
+                                    { "Fn::GetAtt": ["SWGoHGuildMembers", "Arn"] }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
         "UpdateGuildMembers": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
